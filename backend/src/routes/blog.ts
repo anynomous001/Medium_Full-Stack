@@ -135,7 +135,7 @@ blogRouter.put('/blog', async (c) => {
         return c.json({ updatedPost })
     } catch (error) {
         c.status(403)
-        return c.json({ message: "Error while uploading the  post" })
+        return c.json({ message: "Error while updating the  post" })
     }
 })
 
