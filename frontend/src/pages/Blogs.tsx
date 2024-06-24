@@ -1,51 +1,39 @@
 import React from 'react'
 import Blogcards from '../components/Blogcards'
 import Appbar from '../components/Appbar'
+import { useBlogs } from '../hooks'
+import BlogSkeleton from '../components/BlogSkeleton'
 
 const Blogs = () => {
+
+    const { blogs, loading } = useBlogs()
+
+    if (loading) {
+        return <div>
+            <Appbar />
+            <BlogSkeleton />
+            <BlogSkeleton />
+            <BlogSkeleton />
+            <BlogSkeleton />
+        </div>
+    }
+
+
+
     return (
         <div>
             <Appbar />
-            <div className='flex flex-col items-center gap-12 '>
-                <Blogcards
-                    authorName='Pritam'
-                    title='Flowbite is an open-source library of UI'
-                    content=' components based on the utility-first Tailwind CSS framework
-                 featuring dark mode support, a Figma design system, templates, and more.
-                  It includes all of the commonly used components that a website requires,
-                   such as buttons, dropdowns, navigation bars, modals, but also some more
-                    advanced interactive elements  components based on the utility-first 
-                    Tailwind CSS framework featuring dark mode support, a Figma design 
-                    system, templates, and more. It includes all of the commonly used 
-                    components that a website requires, such as buttons, dropdowns, 
-                    navigation bars, modals, but also some more advanced interactive elements
-                    components based on the utility-first Tailwind CSS framework featuring 
-                    dark mode support, a Figma design system, templates, and more. It includes 
-                    all of the commonly used components that a website requires, such as buttons,
-                     dropdowns, navigation bars, modals, but also some more advanced interactive
-                      elements'
-                    publishedDate='2nd Dec 2024 '
-                />
-                <Blogcards
-                    authorName='Pritam'
-                    title='Flowbite is an open-source library of UI'
-                    content=' components based on the utility-first Tailwind CSS framework
-                 featuring dark mode support, a Figma design system, templates, and more.
-                  It includes all of the commonly used components that a website requires,
-                   such as buttons, dropdowns, navigation bars, modals, but also some more
-                    advanced interactive elements  components based on the utility-first 
-                    Tailwind CSS framework featuring dark mode support, a Figma design 
-                    system, templates, and more. It includes all of the commonly used 
-                    components that a website requires, such as buttons, dropdowns, 
-                    navigation bars, modals, but also some more advanced interactive elements
-                    components based on the utility-first Tailwind CSS framework featuring 
-                    dark mode support, a Figma design system, templates, and more. It includes 
-                    all of the commonly used components that a website requires, such as buttons,
-                     dropdowns, navigation bars, modals, but also some more advanced interactive
-                      elements'
-                    publishedDate='2nd Dec 2024 '
-                />
-
+            <div className='flex flex-col items-center gap-12'>
+                {
+                    blogs.map(blog => <Blogcards
+                        key={blog.id}
+                        id={blog.id}
+                        authorName={blog.author.name || "Anonymous"}
+                        title={blog.title}
+                        content={blog.content}
+                        publishedDate={"2nd Feb 2024"}
+                    />)
+                }
             </div>
         </div>
 

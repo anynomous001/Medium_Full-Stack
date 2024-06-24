@@ -25,9 +25,9 @@ blogRouter.use('/*', async (c, next) => {
         c.status(403)
         return c.json({ error: "Unauthorized user" })
     }
-    const token = jwt.split(' ')[1]
+    //const token = jwt.split(' ')[1]
 
-    const decodedUser = await verify(token, c.env.JWT_SECRET)
+    const decodedUser = await verify(jwt, c.env.JWT_SECRET)
     if (!decodedUser) {
         c.json(403)
         return c.json({ error: "Unauthorized user" })
@@ -40,6 +40,7 @@ blogRouter.use('/*', async (c, next) => {
 
 blogRouter.post('/', async (c) => {
     const prisma = new PrismaClient({
+
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
     const authorId = c.get('userId')
@@ -73,7 +74,18 @@ blogRouter.get('/bulk', async (c) => {
     }).$extends(withAccelerate());
 
     try {
-        const posts = await prisma.post.findMany({})
+        const posts = await prisma.post.findMany({
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        })
         return c.json(posts)
     } catch (error) {
         c.status(403)
@@ -94,6 +106,16 @@ blogRouter.get('/:id', async (c) => {
         const post = await prisma.post.findUnique({
             where: {
                 id: blogId
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         })
         c.status(200)
