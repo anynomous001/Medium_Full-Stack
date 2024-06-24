@@ -21,7 +21,6 @@ const BlogSkeleton = () => {
             </div>
         </div>
 
-
     )
 }
 
