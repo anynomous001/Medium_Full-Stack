@@ -1,5 +1,3 @@
-import React from 'react'
-import { useBlog } from '../hooks'
 import { Blog } from '../hooks'
 import Appbar from './Appbar'
 import { Avatar } from './Blogcards'

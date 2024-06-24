@@ -1,5 +1,4 @@
-import React from 'react'
-import Appbar from './Appbar'
+
 
 const BlogSkeleton = () => {
     return (
