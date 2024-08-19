@@ -6,7 +6,6 @@ import { Avatar } from './Blogcards'
 
 
 const Fullblog = ({ blog }: { blog: Blog }) => {
-
     const { date } = useDate()
 
     return (
@@ -15,7 +14,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
             <div className='mb-24 flex flex-col gap-x-20 md:grid grid-cols-12 md:px-12 px-7 '>
                 <div className='col-span-8'>
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
-                    <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold'>{`Posted on ${date}`}</div>
+                    <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold'>{`Posted on ${blog.date === null ? date : ''}`}</div>
                     <div className=' text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium'>{blog.content}</div>
                 </div>
 
@@ -25,8 +24,6 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
 
 
                     <div className='flex flex-col mt-2'>
-
-
                         <div className='flex gap-2'>
                             <Avatar size='small' name={`${blog.author.name || 'Anynomous'}`} />
                             <div className=' mb-2 text-lg  md:text-2xl font-bold  text-gray-600'>

@@ -1,11 +1,11 @@
 
 import Blogcards from '../components/Blogcards'
 import Appbar from '../components/Appbar'
-import { useBlogs } from '../hooks'
+import { useBlogs, useDate } from '../hooks'
 import BlogSkeleton from '../components/BlogSkeleton'
 
 const Blogs = () => {
-
+    const { date } = useDate()
     const { blogs, loading } = useBlogs()
 
     if (loading) {
@@ -32,7 +32,7 @@ const Blogs = () => {
                         authorName={blog.author.name || "Anonymous"}
                         title={blog.title}
                         content={blog.content}
-                        publishedDate={"2nd Feb 2024"}
+                        publishedDate={blog.date === null ? date : ''}
                     />)
                 }
             </div>

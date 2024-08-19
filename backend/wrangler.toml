@@ -2,7 +2,8 @@ name = "backend"
 compatibility_date = "2023-12-01"
 
 [vars]
-/*prisma accelerate pooled link and jwt secret needs to be here*/
+DATABASE_URL ="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiNjQ3ZWY3OWEtZTdlYi00MjFmLTk5ZDUtODQ0OTJhMGMyZTU1IiwidGVuYW50X2lkIjoiNmMwNGExMTk2NjkxYjQyOWNhMTE5YzZhZDIxMmY5NzZiMTA3OGQ2ZjBjNGMwZTk5MTIyNWVmMzE4NzU2OGJhNiIsImludGVybmFsX3NlY3JldCI6ImFjZjgwZDgxLTZmZjUtNDg2Yi1hZjVlLTkzOWZkNGIyYzYwMCJ9.VcoS5ffCH_X9iTKiuuDgYnxdpKn3hicYXJD5duFx3bI"
+JWT_SECRET="my-secret-key"
 
 
 # [vars]

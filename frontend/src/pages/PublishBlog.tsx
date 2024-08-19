@@ -3,11 +3,13 @@ import Appbar from '../components/Appbar'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import { useNavigate } from 'react-router-dom'
+import { useDate } from '../hooks'
 
 const PublishBlog = () => {
     const [title, setTitle] = React.useState('')
     const [content, setContent] = React.useState('')
     const navigate = useNavigate()
+    const { date } = useDate()
 
     return (
         <div >
@@ -20,7 +22,8 @@ const PublishBlog = () => {
                         onClick={async () => {
                             const response = await axios.post(`${BACKEND_URL}/api/h1/blog`, {
                                 title,
-                                content
+                                content,
+                                date
                             }, {
                                 headers: {
                                     Authorization: localStorage.getItem('token')
