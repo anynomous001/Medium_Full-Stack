@@ -1,11 +1,13 @@
-import { Blog } from '../hooks'
+import { Blog, useDate } from '../hooks'
 import Appbar from './Appbar'
 import { Avatar } from './Blogcards'
 
 
 
+
 const Fullblog = ({ blog }: { blog: Blog }) => {
 
+    const { date } = useDate()
 
     return (
         <div>
@@ -13,7 +15,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
             <div className='mb-24 flex flex-col gap-x-20 md:grid grid-cols-12 md:px-12 px-7 '>
                 <div className='col-span-8'>
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
-                    <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold'>{'Post on 2nd December 2023'}</div>
+                    <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold'>{`Posted on ${date}`}</div>
                     <div className=' text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium'>{blog.content}</div>
                 </div>
 
