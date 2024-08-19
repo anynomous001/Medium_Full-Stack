@@ -10,7 +10,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
     return (
         <div>
             <Appbar />
-            <div className='flex flex-col md:grid grid-cols-12 px-20 mt-9 '>
+            <div className='flex flex-col md:grid grid-cols-12 md:px-20 px-10 mt-9 '>
                 <div className='col-span-8'>
                     <div className='text-4xl md:text-7xl  font-extrabold '>{blog.title}</div>
                     <div className='text-slate-500 text-base md:text-lg mt-5 font-bold'>{'Post on 2nd December 2023'}</div>
