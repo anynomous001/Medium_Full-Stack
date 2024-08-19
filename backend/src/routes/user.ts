@@ -23,6 +23,8 @@ export const userRouter = new Hono<{
 // })
 
 
+
+
 userRouter.post('/signup', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
@@ -51,7 +53,7 @@ userRouter.post('/signup', async (c) => {
 
     } catch (error) {
         c.status(403)
-        return c.json({ error: "error while signing up" });
+        return c.json({ error });
     }
 })
 
@@ -85,7 +87,7 @@ userRouter.post('/signin', async (c) => {
 
     } catch (error) {
         c.status(403)
-        return c.json({ error: "error while signing in" });
+        return c.json({ error });
     }
 })
 
