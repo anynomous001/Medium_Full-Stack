@@ -12,9 +12,9 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
             <Appbar />
             <div className='flex flex-col md:grid grid-cols-12 md:px-20 px-10 mt-9 '>
                 <div className='col-span-8'>
-                    <div className='text-4xl md:text-7xl  font-extrabold '>{blog.title}</div>
-                    <div className='text-slate-500 text-base md:text-lg mt-5 font-bold'>{'Post on 2nd December 2023'}</div>
-                    <div className=' text-lg md:text-2xl text-gray-500  mt-10 leading-snug font-semibold'>{blog.content}</div>
+                    <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
+                    <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold'>{'Post on 2nd December 2023'}</div>
+                    <div className=' text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium'>{blog.content}</div>
                 </div>
                 <div className='col-span-3 '>
                     <div className='text-xl font-bold text-gray-400'>Author</div>
