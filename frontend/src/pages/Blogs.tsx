@@ -5,7 +5,6 @@ import { useBlogs, useDate } from '../hooks'
 import BlogSkeleton from '../components/BlogSkeleton'
 
 const Blogs = () => {
-    const { date } = useDate()
     const { blogs, loading } = useBlogs()
 
     if (loading) {
