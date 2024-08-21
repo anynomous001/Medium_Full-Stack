@@ -32,7 +32,7 @@ const Blogs = () => {
                         authorName={blog.author.name || "Anonymous"}
                         title={blog.title}
                         content={blog.content}
-                        publishedDate={blog.date === null ? date : ''}
+                        publishedDate={blog.date ? blog.date : "No Date"}
                     />)
                 }
             </div>
