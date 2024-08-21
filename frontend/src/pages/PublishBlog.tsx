@@ -52,15 +52,5 @@ const PublishBlog = () => {
 
 
 
-function TextArea({ onChange }: { onChange(e: ChangeEvent<HTMLTextAreaElement>): void }) {
-    return <div>
-        <div className=" my-4 border border-gray-200 rounded-lg bg-gray-50">
-            <div className="p-1 bg-white rounded-lg">
-                <textarea onChange={onChange} rows={18} className="p-4 rounded-lg w-full  text-lg font-semibold text-slate-400 bg-gray-50 border-0  focus:outline-slate-300 " placeholder="Write an article..." required ></textarea>
-            </div>
-        </div>
 
-    </div>
-
-}
 export default PublishBlog

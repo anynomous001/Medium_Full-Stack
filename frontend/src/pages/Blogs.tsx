@@ -1,7 +1,7 @@
 
 import Blogcards from '../components/Blogcards'
 import Appbar from '../components/Appbar'
-import { useBlogs, useDate } from '../hooks'
+import { useBlogs } from '../hooks'
 import BlogSkeleton from '../components/BlogSkeleton'
 
 const Blogs = () => {
