@@ -1,4 +1,4 @@
-import { Blog, useDate } from '../hooks'
+import { Blog } from '../hooks'
 import Appbar from './Appbar'
 import { Avatar } from './Blogcards'
 
@@ -6,7 +6,7 @@ import { Avatar } from './Blogcards'
 
 
 const Fullblog = ({ blog }: { blog: Blog }) => {
-    const { date } = useDate()
+
 
     return (
         <div>
