@@ -1,6 +1,9 @@
 import { Avatar } from './Blogcards'
 import { Link } from 'react-router-dom'
 
+
+
+
 const Appbar = () => {
     return (
         <div className='mb-6'>
@@ -16,6 +19,8 @@ const Appbar = () => {
                     </Link>
 
                     <Avatar name='Pritam' size='big' />
+
+
                 </div>
 
             </div>

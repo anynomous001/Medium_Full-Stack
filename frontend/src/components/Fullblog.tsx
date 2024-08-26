@@ -15,7 +15,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                 <div className='col-span-8'>
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
                     <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold'>{`Posted on ${blog.date === null ? 'No Date' : blog.date}`}</div>
-                    <div className=' text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium'>{blog.content}</div>
+                    <div className='text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium'>{blog.content}</div>
                 </div>
 
 
@@ -30,7 +30,11 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                                 {`${blog.author.name || 'Anynomous'}`}
                             </div>
                         </div>
-                        <p className='text-base font-normal text-gray-400'> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus consequatur perspiciatis nesciunt commodi, libero impedit vitae alias vero praesentium quo earum omnis voluptate.</p>
+                        <p className='text-base font-normal text-gray-400'>
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
+                            consequatur perspiciatis nesciunt commodi, libero impedit vitae alias vero
+                            praesentium quo earum omnis voluptate.
+                        </p>
                     </div>
 
 
