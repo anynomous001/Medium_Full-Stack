@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { sign } from "hono/jwt";
+import { sign, verify } from "hono/jwt";
 import { signinInput, signupInput } from "@pritamchak/common-package"
 
 export const userRouter = new Hono<{
@@ -92,12 +92,65 @@ userRouter.post('/signin', async (c) => {
 })
 
 
-userRouter.get('/user', async (c) => {
+userRouter.use('/details', async (c, next) => {
 
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
 
+
+    const jwt = c.req.header('Authorization')
+
+    if (!jwt) {
+        c.status(403)
+        return c.json({ error: "Unauthorized User" })
+    }
+
+    const decodedUser = await verify(jwt, c.env.JWT_SECRET)
+
+    if (!decodedUser) {
+        c.status(403)
+        return c.json({ error: "User Does not Exist!" })
+    }
+
+    c.set('userId', decodedUser.id);
+    await next()
+
+})
+
+
+userRouter.get('/details', async (c) => {
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const authorId = c.get("userId")
+
+
+    try {
+
+        const user = await prisma.user.findFirst({
+            where: {
+                id: authorId
+            },
+            select: {
+                id: true,
+                email: true,
+                password: true,
+                name: true,
+                posts: true,
+            }
+        })
+
+        return c.json({ user })
+
+    } catch (error) {
+        c.status(403)
+        return c.json({ error: "error while fetching user details!!" })
+
+
+    }
 
 
 
