@@ -24,7 +24,7 @@ const PublishBlog = () => {
                     <input type="search" onChange={(e) => setTitle(e.target.value)} id="default-search" className="block w-full p-4 ps-10  text-lg font-semibold   border border-gray-300 rounded-lg bg-gray-50 focus:outline-gray-200" placeholder="Title" required />
                     {/* <TextArea onChange={(e) => setContent(e.target.value)} /> */}
                     <Textarea className='mt-10 bg-gray-50 focus:outline-gray-200 text-lg font-semibold text-slate-400' placeholder='Write your blog here ...' onChange={(e) => setContent(e.target.value)} />
-                    <Button className='mt-8'
+                    <Button className='mt-8 text-lg font-normal'
                         onClick={async () => {
                             const response = await axios.post(`${BACKEND_URL}/api/h1/blog`, {
                                 title,
@@ -41,7 +41,7 @@ const PublishBlog = () => {
                         }
                         }
 
-                    >Publish post
+                    >Publish
                     </Button>
 
                 </div>
