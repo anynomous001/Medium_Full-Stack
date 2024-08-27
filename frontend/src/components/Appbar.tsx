@@ -27,7 +27,7 @@ const Appbar = () => {
                         </Button>
                     </Link>
 
-                    <Avatar name={userDetails?.name || ''} size='big' />
+                    <Avatar name={userDetails?.name || 'U'} size='big' />
 
 
                 </div>
