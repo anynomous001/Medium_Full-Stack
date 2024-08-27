@@ -9,7 +9,6 @@ const Blogs = () => {
 
     if (loading) {
         return <div>
-
             <Appbar />
             <BlogSkeleton />
             <BlogSkeleton />

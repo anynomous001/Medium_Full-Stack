@@ -36,7 +36,6 @@ export const useBlogs = () => {
 
 export const useBlog = ({ id }: { id: string }) => {
 
-
     const [loading, setLoading] = React.useState(true);
     const [blog, setBlog] = React.useState<Blog>();
 
@@ -56,6 +55,54 @@ export const useBlog = ({ id }: { id: string }) => {
         blog
     }
 }
+
+
+export interface UserDetails {
+    id: string,
+    email: string,
+    password: string,
+    name: string,
+    posts: UserPosts[]
+}
+
+type UserPosts = {
+    id: string,
+    title: string,
+    date: string,
+    content: string,
+    published: boolean,
+    authorId: string
+
+}
+
+export const useUserDetails = () => {
+    const [loading, setLoading] = React.useState(true);
+    const [userDetails, setUserDetails] = React.useState<UserDetails>();
+
+    React.useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/h1/user/details`, {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        }).then(response => {
+            console.log('API Response:', response.data);
+            setUserDetails(response.data.user); // Ensure you're accessing the correct property
+            setLoading(false);
+        }).catch(error => {
+            console.error('Error fetching user details:', error);
+            setLoading(false);
+        });
+    }, []); // Empty dependency array means this effect only runs once on mount
+
+    return {
+        loading,
+        userDetails
+    }
+}
+
+
+
+
 
 export const useDate = () => {
     const today = new Date();
