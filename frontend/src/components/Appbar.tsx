@@ -27,7 +27,7 @@ const Appbar = () => {
                         </Button>
                     </Link>
                     {loading ? <AvatarSkeleton size='big' /> :
-                        <Avatar name={userDetails?.name} size='big' />
+                        <Avatar name={userDetails?.name as string} size='big' />
                     }
 
                 </div>

@@ -16,7 +16,7 @@ const UserDetails = () => {
             <Appbar />
             <div className="flex  flex-col items-center space-y-4 mx-auto mt-8 ">
                 {loading ? <AvatarSkeleton size='large' /> :
-                    <Avatar name={userDetails?.name} size='large' />
+                    <Avatar name={userDetails?.name as string} size='large' />
                 }
                 <h1 className="text-3xl font-bold">{userDetails?.name} </h1>
                 <div className="max-w-full ">
