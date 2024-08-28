@@ -33,12 +33,12 @@ const UserDetails = () => {
                 <div className="w-full flex flex-col items-center space-y-12 mx-auto py-20 ">
                     <div><p className="text-2xl md:text-4xl text-slate-500 font-bold">Your Posts</p></div>
                     {loading ?
-                        <>
+                        <div className="md:w-full md:ml-40">
                             <BlogSkeleton />
                             <BlogSkeleton />
                             <BlogSkeleton />
                             <BlogSkeleton />
-                        </> : userDetails?.posts.length === 0 ?
+                        </div> : userDetails?.posts.length === 0 ?
                             <div className="flex items-center pt-32">
                                 <p className="text-2xl text-slate-500/40 block font-bold mr-4">
                                     No Posts to Show !!
