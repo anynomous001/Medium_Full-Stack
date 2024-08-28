@@ -1,6 +1,6 @@
 import { Blog } from '../hooks'
 import Appbar from './Appbar'
-import { Avatar } from './Blogcards'
+import Avatar from './Avatar'
 
 
 

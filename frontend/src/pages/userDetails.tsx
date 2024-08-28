@@ -1,5 +1,7 @@
 import Appbar from "@/components/Appbar"
-import Blogcards, { Avatar } from "@/components/Blogcards"
+import Avatar from "@/components/Avatar"
+import AvatarSkeleton from "@/components/AvatarSkeleton"
+import Blogcards from "@/components/Blogcards"
 import BlogSkeleton from "@/components/BlogSkeleton"
 import { useUserDetails } from "@/hooks"
 
@@ -13,7 +15,9 @@ const UserDetails = () => {
         <div>
             <Appbar />
             <div className="flex  flex-col items-center space-y-4 mx-auto mt-8 ">
-                <Avatar name={userDetails?.name || 'U'} size="large" />
+                {loading ? <AvatarSkeleton size='large' /> :
+                    <Avatar name={userDetails?.name} size='large' />
+                }
                 <h1 className="text-3xl font-bold">{userDetails?.name} </h1>
                 <div className="max-w-full ">
                     <div>

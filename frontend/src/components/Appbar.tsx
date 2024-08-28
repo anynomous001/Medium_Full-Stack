@@ -1,15 +1,16 @@
 import { useUserDetails } from '@/hooks'
-import { Avatar } from './Blogcards'
 import { Link } from 'react-router-dom'
 import { Button } from './ui/button'
 import { SquarePen } from 'lucide-react'
+import AvatarSkeleton from './AvatarSkeleton'
+import Avatar from './Avatar'
 
 
 
 
 
 const Appbar = () => {
-    const { userDetails } = useUserDetails()
+    const { userDetails, loading } = useUserDetails()
 
     return (
         <div className='mb-6'>
@@ -22,13 +23,12 @@ const Appbar = () => {
                         <Button className='space-y-10 rounded-3xl text-xl font-light py-5' size={'sm'} >
 
                             <SquarePen className='w-6 h-6 mr-3' />
-
                             Write
                         </Button>
                     </Link>
-
-                    <Avatar name={userDetails?.name || 'U'} size='big' />
-
+                    {loading ? <AvatarSkeleton size='big' /> :
+                        <Avatar name={userDetails?.name} size='big' />
+                    }
 
                 </div>
 
