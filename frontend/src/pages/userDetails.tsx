@@ -28,6 +28,7 @@ const UserDetails = () => {
                     </div>
                 </div>
                 <div className="w-full flex flex-col items-center space-y-12 mx-auto py-20 ">
+                    <div><p className="text-2xl text-slate-500/40 font-bold">Your Posts</p></div>
                     {loading ?
                         <>
                             <BlogSkeleton />
