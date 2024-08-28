@@ -35,6 +35,7 @@ export default function Avatar({ name, size }: { name: any, size: 'big' | 'small
             <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <Link to={"/blogs"}><DropdownMenuItem>Home</DropdownMenuItem></Link>
                 <Link to={"/profile"}><DropdownMenuItem>Profile</DropdownMenuItem></Link>
                 <DropdownMenuItem onClick={() => logout()}>Log Out</DropdownMenuItem>
             </DropdownMenuContent>
