@@ -12,12 +12,11 @@ import {
 import { Link } from "react-router-dom";
 
 
-
 function logout() {
-    localStorage.removeItem('token'); // Remove JWT from localStorage
-    sessionStorage.removeItem('token'); // Remove JWT from sessionStorage
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Invalidate JWT cookie
-    window.location.href = '/'; // Redirect to login page
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    window.location.href = '/';
 }
 
 
