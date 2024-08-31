@@ -1,14 +1,13 @@
 import { Facebook, SquareArrowOutUpRight, Twitter } from "lucide-react"
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "./ui/dropdown-menu"
-import { useLocation } from 'react-router-dom';
 
 
 const ShareComponent = () => {
 
-    const location = useLocation()
+    const location = window.location.href
 
-
+    console.log(location)
     return (
         <div>
             <hr></hr>
@@ -16,12 +15,12 @@ const ShareComponent = () => {
                 <DropdownMenuTrigger><SquareArrowOutUpRight /></DropdownMenuTrigger>
                 <DropdownMenuContent>
                     <DropdownMenuItem>
-                        <FacebookShareButton url={location.pathname} >
+                        <FacebookShareButton url={location} >
                             <Facebook />
                         </FacebookShareButton >
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <TwitterShareButton url={location.pathname} >
+                        <TwitterShareButton url={location} >
                             <Twitter />
                         </TwitterShareButton >
                     </DropdownMenuItem>
