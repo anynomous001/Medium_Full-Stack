@@ -1,6 +1,7 @@
 import { Blog } from '../hooks'
 import Appbar from './Appbar'
 import Avatar from './Avatar'
+import ShareComponent from './shareComponent'
 
 
 
@@ -15,14 +16,13 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                 <div className='col-span-8'>
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
                     <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold'>{`Posted on ${blog.date === null ? 'No Date' : blog.date}`}</div>
+                    <ShareComponent />
                     <div className='text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium'>{blog.content}</div>
                 </div>
 
 
                 <div className='col-span-4 pr-4 md:mt-0 mt-10'>
                     <div className='text-xl font-bold text-gray-400'>Author</div>
-
-
                     <div className='flex flex-col mt-2'>
                         <div className='flex gap-2'>
                             <Avatar size='small' name={`${blog.author.name || 'Anynomous'}`} />
