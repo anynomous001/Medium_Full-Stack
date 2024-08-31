@@ -9,25 +9,30 @@ const ShareComponent = () => {
 
     console.log(location)
     return (
-        <div>
-            <hr></hr>
-            <DropdownMenu>
-                <DropdownMenuTrigger><SquareArrowOutUpRight /></DropdownMenuTrigger>
-                <DropdownMenuContent>
-                    <DropdownMenuItem>
-                        <FacebookShareButton url={location} >
-                            <Facebook />
-                        </FacebookShareButton >
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <TwitterShareButton url={location} >
-                            <Twitter />
-                        </TwitterShareButton >
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+        <>
 
-        </div>
+
+
+            <hr></hr>
+            <div className="py-3">
+                <DropdownMenu>
+                    <DropdownMenuTrigger><SquareArrowOutUpRight /></DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                        <DropdownMenuItem>
+                            <FacebookShareButton url={location} >
+                                <Facebook />
+                            </FacebookShareButton >
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <TwitterShareButton url={location} >
+                                <Twitter />
+                            </TwitterShareButton >
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+            <hr></hr>
+        </>
     )
 }
 
