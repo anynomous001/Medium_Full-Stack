@@ -1,21 +1,12 @@
 import { Facebook, Heart, MessageCircle, SquareArrowOutUpRight, Twitter } from "lucide-react"
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "./ui/dropdown-menu"
-import React from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import LikeComponent from "./LikeComponent";
 
 
 const ShareComponent = () => {
-
-
-    const [isLiked, setIsLiked] = React.useState(false)
-
-
-    const isLikedFunc = () => {
-        setIsLiked(!isLiked)
-    }
-
 
     return (
         <>
@@ -54,18 +45,8 @@ const ShareComponent = () => {
                             strokeWidth={1.5}
                         />
                     </Button>
-                    <Button
-                        onClick={() => isLikedFunc()}
-                        variant={'ghost'}
-                        size={'icon'}
-                    >
-                        <Heart
-                            className={cn("w-8 h-8",
-                                isLiked ? "fill-red-500/90 text-red-500/90" : "text-black"
-                            )}
-                            strokeWidth={1.5}
-                        />
-                    </Button>
+                    <LikeComponent />
+
                 </div>
             </div>
             <hr></hr>

@@ -42,6 +42,8 @@ blogRouter.post('/', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
+
+
     const authorId = c.get('userId')
     const body = await c.req.json()
 
@@ -113,6 +115,7 @@ blogRouter.get('/:id', async (c) => {
                 title: true,
                 date: true,
                 content: true,
+                likes: true,
                 author: {
                     select: {
                         name: true
@@ -124,10 +127,40 @@ blogRouter.get('/:id', async (c) => {
         return c.json({ post })
     } catch (error) {
         c.status(403)
-        return c.json({ message: "Error while fetching  post" })
+        return c.json({ message: "Error while fetching  post", error })
     }
 })
 
+
+blogRouter.get('/:id/likes', async (c) => {
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const blogId = c.req.param('id')
+
+    try {
+        const postLikes = await prisma.post.findFirst({
+            where: {
+                id: blogId
+            },
+            select: {
+                likes: true,
+                isLiked: true,
+            }
+        })
+
+        c.status(200)
+        return c.json({ postLikes })
+
+    } catch (error) {
+        c.status(403)
+        return c.json({ Error_Message: "Eror while liking the post !!" })
+    }
+
+
+})
 
 blogRouter.put('/blog', async (c) => {
     const prisma = new PrismaClient({
