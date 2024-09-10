@@ -1,8 +1,8 @@
 import axios from "axios"
 import React from "react"
 import { BACKEND_URL } from "../config"
-import { useRecoilState } from "recoil"
-import { LikeState, likeState } from "@/recoil/atom"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { LikeState, likesState } from "@/recoil/atom"
 
 export interface Blog {
     id: string,
@@ -35,28 +35,48 @@ export const useBlogs = () => {
         blogs
     }
 }
-export const useLikes = ({ id }: { id: string }) => {
-
-    const [likesState, setLikeState] = useRecoilState<LikeState>(likeState);
 
 
-React.useEffect(()=>{
-  axios.get(`${BACKEND_URL}/api/h1/blog/${id}/likes`, {
-        headers: {
-            Authorization: localStorage.getItem("token")
-        }
-    }).then(response => {
-        setLikeState(response.data.postLikes)
-    })
+export const useSetLikes = ({ id }: { id: string }) => {
 
-},[])
-  
+    const { likes, isLiked } = useRecoilValue(likesState);
+
+
+    React.useEffect(() => {
+        const response = axios.put(`${BACKEND_URL}/api/h1/blog/${id}/likes`, {
+            likes,
+            isLiked
+        }, {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        })
+
+        console.log(response)
+
+    }, [])
+
+}
+
+export const useGetLikes = ({ id }: { id: string }) => {
+
+    const [likeState, setLikeState] = useRecoilState<LikeState>(likesState);
+
+
+    React.useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/h1/blog/${id}/likes`, {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        }).then(response => {
+            setLikeState(response.data.postLikes)
+        })
+
+    }, [])
 
     return {
-        likesState
+        likeState
     }
-
-
 }
 export const useBlog = ({ id }: { id: string }) => {
 

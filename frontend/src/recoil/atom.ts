@@ -6,8 +6,8 @@ export interface LikeState {
     isLiked: boolean;
 }
 
-export const likeState = atom<LikeState>({
-    key: 'likeState',
+export const likesState = atom<LikeState>({
+    key: 'likesState',
     default: {
         likes: 0,
         isLiked: false,

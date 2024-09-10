@@ -162,6 +162,35 @@ blogRouter.get('/:id/likes', async (c) => {
 
 })
 
+
+blogRouter.put(`/:id/likes`, async (c) => {
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const blogId = c.req.param('id')
+    const body = await c.req.json()
+
+    try {
+        const postLikes = await prisma.post.update({
+            where: {
+                id: blogId
+            },
+            data: {
+                likes: body.likes,
+                isLiked: body.isLiked
+            }
+        })
+        c.status(200)
+        return c.json({ postLikes })
+
+    } catch (error) {
+        c.status(403)
+        return c.json({ Error_Message: 'Error while liking the post !!' })
+    }
+
+})
+
 blogRouter.put('/blog', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
