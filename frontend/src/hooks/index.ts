@@ -1,7 +1,7 @@
 import axios from "axios"
-import React, { useEffect } from "react"
+import React from "react"
 import { BACKEND_URL } from "../config"
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilState } from "recoil"
 import { LikeState, likesState } from "@/recoil/atom"
 
 export interface Blog {
