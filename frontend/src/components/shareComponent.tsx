@@ -1,4 +1,4 @@
-import { Facebook, Heart, MessageCircle, SquareArrowOutUpRight, Twitter } from "lucide-react"
+import { Facebook, MessageCircle, SquareArrowOutUpRight, Twitter } from "lucide-react"
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "./ui/dropdown-menu"
 import { Button } from "./ui/button";
