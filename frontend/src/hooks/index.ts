@@ -1,5 +1,5 @@
 import axios from "axios"
-import React from "react"
+import React, { useEffect } from "react"
 import { BACKEND_URL } from "../config"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { LikeState, likesState } from "@/recoil/atom"
@@ -37,30 +37,66 @@ export const useBlogs = () => {
 }
 
 
-export const useSetLikes = ({ id }: { id: string }) => {
-
-    const { likes, isLiked } = useRecoilValue(likesState);
+// export const useUpdateLikes = ({ id, likes, isLiked }: { id: string, likes: number, isLiked: boolean }) => {
 
 
-    React.useEffect(() => {
-        const response = axios.put(`${BACKEND_URL}/api/h1/blog/${id}/likes`, {
-            likes,
-            isLiked
-        }, {
-            headers: {
-                Authorization: localStorage.getItem('token')
+
+//     React.useEffect(() => {
+//         const updateLikes = async () => {
+//             try {
+//                 const response = await axios.put(`${BACKEND_URL}/api/h1/blog/${id}/likes`, {
+//                     likes,
+//                     isLiked
+//                 }, {
+//                     headers: {
+//                         Authorization: localStorage.getItem('token')
+//                     }
+//                 })
+//                 console.log(response)
+//             } catch (error) {
+//                 console.log(error)
+//             }
+//         }
+
+//         if (id) {
+//             updateLikes()
+//         }
+
+//     }, [likes, isLiked])
+
+// }
+
+
+export const updateLikes = async ({ id, likes, isLiked }: { id: string, likes: number, isLiked: boolean }) => {
+
+
+    // console.log(likes + '  inside updateLikes   ' + isLiked)
+
+    try {
+        const response = await axios.put(
+            `${BACKEND_URL}/api/h1/blog/${id}/likes`,
+            { likes, isLiked },
+            {
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                }
             }
-        })
+        );
+        console.log(response);
+    } catch (error) {
+        console.error("Error updating likes", error);
+    }
+};
 
-        console.log(response)
 
-    }, [])
 
-}
+
+
 
 export const useGetLikes = ({ id }: { id: string }) => {
 
-    const [likeState, setLikeState] = useRecoilState<LikeState>(likesState);
+    const [{ likes, isLiked }, setLikeState] = useRecoilState<LikeState>(likesState);
+
 
 
     React.useEffect(() => {
@@ -69,15 +105,22 @@ export const useGetLikes = ({ id }: { id: string }) => {
                 Authorization: localStorage.getItem("token")
             }
         }).then(response => {
-            setLikeState(response.data.postLikes)
+            setLikeState(() => ({
+                isLiked: response.data.postLikes.isLiked,
+                likes: response.data.postLikes.likes,
+            }));
+            // console.log(response.data.postLikes.likes + '   inside useGetLikes  inside useEffect  ')
         })
 
     }, [])
 
+    // console.log(likes + '  inside useGetLikes outside useEffect  ' + isLiked)
     return {
-        likeState
+        likes, isLiked
     }
 }
+
+
 export const useBlog = ({ id }: { id: string }) => {
 
     const [loading, setLoading] = React.useState(true);
@@ -129,7 +172,6 @@ export const useUserDetails = () => {
                 Authorization: localStorage.getItem('token')
             }
         }).then(response => {
-            console.log('API Response:', response.data);
             setUserDetails(response.data.user); // Ensure you're accessing the correct property
             setLoading(false);
         }).catch(error => {
