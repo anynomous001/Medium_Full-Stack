@@ -3,7 +3,7 @@ import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "./ui/dropdown-menu"
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
-import LikeComponent from "./LikeComponent";
+// import LikeComponent from "./LikeComponent";
 
 
 const ShareComponent = () => {
@@ -45,7 +45,7 @@ const ShareComponent = () => {
                             strokeWidth={1.5}
                         />
                     </Button>
-                    <LikeComponent />
+                    {/* <LikeComponent /> */}
 
                 </div>
             </div>

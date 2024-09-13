@@ -140,6 +140,11 @@ userRouter.get('/details', async (c) => {
                 password: true,
                 name: true,
                 posts: true,
+                likedPost: {
+                    include: {
+                        post: true
+                    }
+                },
             }
         })
 
@@ -148,8 +153,6 @@ userRouter.get('/details', async (c) => {
     } catch (error) {
         c.status(403)
         return c.json({ error: "error while fetching user details!!" })
-
-
     }
 
 
