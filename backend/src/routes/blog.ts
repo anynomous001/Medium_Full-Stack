@@ -70,6 +70,8 @@ blogRouter.post('/', async (c) => {
         return c.json({ message: "Error while uploading the  post" })
     }
 })
+
+
 blogRouter.get('/bulk', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
@@ -140,6 +142,7 @@ blogRouter.get('/:id', async (c) => {
     }).$extends(withAccelerate());
 
     const blogId = c.req.param('id')
+    const userId = c.get('userId')
 
     try {
         const post = await prisma.post.findUnique({
@@ -151,16 +154,36 @@ blogRouter.get('/:id', async (c) => {
                 title: true,
                 date: true,
                 content: true,
-                likedBy: true,
+                /*Explanation :post.findUnique: Fetches the post by postId.
+                  include { likedBy: { where: { userId: userId } } }: Filters the likedBy relationship to 
+                 only include entries where the userId matches the current user.
+                 isLikedByUser: If the user has liked the post, the likedBy array will contain one 
+                 or more entries; otherwise, it will be empty. */
+                likedBy: {
+                    where: { userId: userId }
+                },
+                /*explanation :  _count: Counts the number of users who have liked the post.
+            likedBy: { where: { userId: userId } }: Filters the likedBy relationship to check if 
+           the user has liked the post.If the likedBy array has entries, the user has liked the post; otherwise,
+            they haven't. */
+                _count: {
+                    select: {
+                        likedBy: true
+                    }
+                },
                 author: {
                     select: {
-                        name: true
+                        name: true,
+                        id: true
                     }
                 }
             }
         })
+
+
+        const hasliked = post ? post.likedBy.length > 0 : false
         c.status(200)
-        return c.json({ post })
+        return c.json({ post, hasliked })
     } catch (error) {
         c.status(403)
         return c.json({ message: "Error while fetching  post", error })
@@ -204,11 +227,25 @@ blogRouter.get('/:id/likes/count', async (c) => {
     const blogId = c.req.param('id')
 
     try {
-        const likeCount = await prisma.likedPost.count({
+        // const likeCount = await prisma.likedPost.count({
+        //     where: {
+        //         postId: blogId
+        //     }
+        // })
+        const postWithLikeCount = await prisma.post.findUnique({
             where: {
-                postId: blogId
+                id: blogId // The ID of the post you're fetching
+            },
+            include: {
+                _count: {
+                    select: {
+                        likedBy: true  // Count the number of entries in the `likedBy` relationship (likes)
+                    }
+                }
             }
-        })
+        });
+
+        console.log(postWithLikeCount);
 
 
         // const post = await prisma.post.findUnique({
@@ -364,10 +401,8 @@ blogRouter.get('/:id/likes/count', async (c) => {
         By understanding the differences between the two approaches, you can choose the one that fits
          your specific use case and performance needs. */
 
-
-
         c.status(200)
-        return c.json(likeCount)
+        return c.json(postWithLikeCount)
 
     } catch (error) {
         c.status(403)
@@ -376,7 +411,75 @@ blogRouter.get('/:id/likes/count', async (c) => {
     }
 })
 
+blogRouter.post('/:id/like-toggle', async (c) => {
 
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const postId = c.req.param('id')
+    const userId = c.get('userId')
+
+
+
+    try {
+        const hasliked = await prisma.likedPost.findFirst({
+            where: {
+                postId,
+                userId
+            },
+        })
+
+        var likeCount = 0
+
+        if (hasliked) {
+            await prisma.likedPost.delete({
+                where: {
+                    id: hasliked.id
+                }
+            })
+
+
+            likeCount = await prisma.likedPost.count({
+                where: {
+                    userId,
+                    postId
+                }
+            })
+
+            console.log('post unliked')
+        } else if (hasliked == null) {
+            await prisma.likedPost.create({
+                data: {
+                    postId,
+                    userId
+                }
+            })
+
+
+            likeCount = await prisma.likedPost.count({
+                where: {
+                    userId,
+                    postId
+                }
+            })
+
+            console.log('post liked')
+        }
+
+
+        const haslikedNow = !hasliked
+
+        c.status(200)
+        return c.json({ hasliked: haslikedNow, likeCount })
+    } catch (error) {
+
+    }
+
+
+
+
+})
 
 blogRouter.delete('/:id', async (c) => {
 
