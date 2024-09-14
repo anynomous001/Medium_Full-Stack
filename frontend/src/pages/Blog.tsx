@@ -11,6 +11,8 @@ const Blog = () => {
         id: id || ''
     })
 
+
+
     if (loading || !blog) {
         return <div>
             <Appbar />
