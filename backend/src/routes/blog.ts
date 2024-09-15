@@ -442,13 +442,12 @@ blogRouter.post('/:id/like-toggle', async (c) => {
 
             likeCount = await prisma.likedPost.count({
                 where: {
-                    userId,
                     postId
                 }
             })
 
             console.log('post unliked')
-        } else if (hasliked == null) {
+        } else {
             await prisma.likedPost.create({
                 data: {
                     postId,
@@ -459,7 +458,6 @@ blogRouter.post('/:id/like-toggle', async (c) => {
 
             likeCount = await prisma.likedPost.count({
                 where: {
-                    userId,
                     postId
                 }
             })
@@ -469,7 +467,7 @@ blogRouter.post('/:id/like-toggle', async (c) => {
 
 
         const haslikedNow = !hasliked
-
+        console.log(haslikedNow, likeCount)
         c.status(200)
         return c.json({ hasliked: haslikedNow, likeCount })
     } catch (error) {

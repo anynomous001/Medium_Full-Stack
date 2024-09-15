@@ -1,7 +1,7 @@
 import axios from "axios"
 import React from "react"
 import { BACKEND_URL } from "../config"
-import { useRecoilState } from "recoil"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import { blogState, likeState } from "@/recoil/atom"
 
 export interface Blog {
@@ -146,6 +146,7 @@ export const useBlog = ({ id }: { id: string }) => {
                 Authorization: localStorage.getItem("token")
             }
         }).then(response => {
+            console.log(response.data.post._count, response.data.hasliked)
             setBlog(response.data.post);
             setLoading(false);
             setLikeInfo(() => ({
@@ -205,10 +206,6 @@ export const useUserDetails = () => {
     }
 }
 
-
-
-
-
 export const useDate = () => {
     const today = new Date();
     const day = today.getDate();
@@ -227,4 +224,29 @@ export const useDate = () => {
 
     const date = `${day}${daySuffix(day)} ${month} ${year}`
     return { date };
+}
+
+
+const setLikeInfo = useSetRecoilState(likeState)
+
+export async function handleLikeToggle({ id }: { id: string }) {
+    try {
+        await axios.post(`${BACKEND_URL}/api/h1/blog/${id}/like-toggle`, {}, {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        }).then((response) => {
+            console.log(response.data.hasliked)
+            console.log(response.data.likeCount)
+            setLikeInfo(() => ({
+                hasLiked: response.data.hasliked,
+                likeCount: response.data.likeCount
+            }))
+
+
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
 }
