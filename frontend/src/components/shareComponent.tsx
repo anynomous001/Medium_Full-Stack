@@ -4,6 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuIte
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import LikeComponent from "./LikeComponent";
+import TooltipWrapper from "./ToolTipWrapper";
 
 
 const ShareComponent = () => {
@@ -18,7 +19,10 @@ const ShareComponent = () => {
                             <Button
                                 variant={'ghost'}
                                 size={'icon'}>
-                                <SquareArrowOutUpRight className="w-7 h-7 hover:bg-slate-400/10" />
+                                <TooltipWrapper tooltipContent={'Share'} triggerText={
+                                    <SquareArrowOutUpRight className="w-7 h-7 hover:bg-slate-400/10" />
+
+                                } />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
@@ -33,22 +37,25 @@ const ShareComponent = () => {
                                 </TwitterShareButton >
                             </DropdownMenuItem>
                         </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+                    </DropdownMenu >
+                </div >
                 <div className=" space-x-3">
-                    <Button
-                        variant={'ghost'}
-                        size={'icon'}
-                    >
-                        <MessageCircle
-                            className={cn("w-8 h-8")}
-                            strokeWidth={1.5}
-                        />
-                    </Button>
-                    <LikeComponent />
+                    <TooltipWrapper tooltipContent={'Comment'} triggerText={
+                        <Button
+                            variant={'ghost'}
+                            size={'icon'}
+                        >
+                            <MessageCircle
+                                className={cn("w-8 h-8")}
+                                strokeWidth={1.5}
+                            />
+                        </Button>
+                    } />
+                    <TooltipWrapper tooltipContent={'Like'} triggerText={<LikeComponent />
+                    } />
 
                 </div>
-            </div>
+            </div >
             <hr></hr>
         </>
     )

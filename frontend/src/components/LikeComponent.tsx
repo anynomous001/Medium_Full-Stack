@@ -2,17 +2,39 @@ import { Heart } from "lucide-react"
 import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import { useParams } from "react-router-dom"
-import { useRecoilValue } from "recoil"
+import { useRecoilState } from "recoil"
 import { likeState } from "@/recoil/atom"
+import { BACKEND_URL } from "@/config"
+import axios from "axios"
 
-import { handleLikeToggle } from "@/hooks"
 
 
 const LikeComponent = () => {
     // bad practice prop drilling 
     const { id } = useParams()
-    const likeInfo = useRecoilValue(likeState)
+    const [likeInfo, setLikeInfo] = useRecoilState(likeState)
 
+    async function handleLikeToggle({ id }: { id: string }) {
+        try {
+            await axios.post(`${BACKEND_URL}/api/h1/blog/${id}/like-toggle`, {}, {
+                headers: {
+                    Authorization: localStorage.getItem("token")
+                }
+            }).then((response) => {
+                console.log(response.data.hasliked)
+                console.log(response.data.likeCount)
+                setLikeInfo(() => ({
+                    hasLiked: response.data.hasliked,
+                    likeCount: response.data.likeCount
+                }))
+
+
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Button

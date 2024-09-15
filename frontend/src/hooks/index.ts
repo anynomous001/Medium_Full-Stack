@@ -227,26 +227,4 @@ export const useDate = () => {
 }
 
 
-const setLikeInfo = useSetRecoilState(likeState)
 
-export async function handleLikeToggle({ id }: { id: string }) {
-    try {
-        await axios.post(`${BACKEND_URL}/api/h1/blog/${id}/like-toggle`, {}, {
-            headers: {
-                Authorization: localStorage.getItem("token")
-            }
-        }).then((response) => {
-            console.log(response.data.hasliked)
-            console.log(response.data.likeCount)
-            setLikeInfo(() => ({
-                hasLiked: response.data.hasliked,
-                likeCount: response.data.likeCount
-            }))
-
-
-        })
-
-    } catch (error) {
-        console.log(error)
-    }
-}
