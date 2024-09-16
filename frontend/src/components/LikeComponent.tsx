@@ -1,68 +1,54 @@
 import { Heart } from "lucide-react"
 import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
-import { updateLikes, useGetLikes } from "@/hooks"
 import { useParams } from "react-router-dom"
-import { likesState } from "@/recoil/atom"
-import { useSetRecoilState } from "recoil"
+import { useRecoilState } from "recoil"
+import { likeState } from "@/recoil/atom"
+import { BACKEND_URL } from "@/config"
+import axios from "axios"
+
 
 
 const LikeComponent = () => {
     // bad practice prop drilling 
     const { id } = useParams()
-    const { likes, isLiked } = useGetLikes({
-        id: id || ''
-    })
+    const [likeInfo, setLikeInfo] = useRecoilState(likeState)
 
-
-    // console.log(likes + 'top like comp  ' + isLiked)
-
-    // const [likeState, setLikeState] = useRecoilState<LikeState>(likesState)
-
-    const setLikeState = useSetRecoilState(likesState);
-
-    const handleLikeToggle = async () => {
-        const updateState = {
-            likes: isLiked ? likes - 1 : likes + 1,
-            isLiked: !isLiked,
-        };
-
+    async function handleLikeToggle({ id }: { id: string }) {
         try {
-            // Call the updateLikes function and await its result before updating Recoil state
-            await updateLikes({ id: id || "", likes: updateState.likes, isLiked: updateState.isLiked });
+            await axios.post(`${BACKEND_URL}/api/h1/blog/${id}/like-toggle`, {}, {
+                headers: {
+                    Authorization: localStorage.getItem("token")
+                }
+            }).then((response) => {
+                console.log(response.data.hasliked)
+                console.log(response.data.likeCount)
+                setLikeInfo(() => ({
+                    hasLiked: response.data.hasliked,
+                    likeCount: response.data.likeCount
+                }))
 
-            /*The original issue happens because React updates state asynchronously, 
-            so when you click to toggle the like, setLikeState has not immediately reflected 
-            the updated value of likes and isLiked, but you're calling updateLikes with the old values. 
-            By ensuring you pass the correct updated state to your API call, you keep both the Recoil 
-            state and the database in sync. */
 
+            })
 
-
-            // Only update Recoil state after server update is successful
-            setLikeState(updateState);
         } catch (error) {
-            console.error("Failed to update likes on server", error);
-            // Optionally, handle rollback or error UI
+            console.log(error)
         }
-    };
-
-
-    // console.log(likes + 'bottom like comp  ' + isLiked)
+    }
 
     return (
         <Button
-            onClick={() => handleLikeToggle()}
+            onClick={() => handleLikeToggle({ id: id || '' })}
             variant={'ghost'}
             size={'icon'}
         >
             <Heart
                 className={cn("w-8 h-8",
-                    isLiked ? "fill-red-500/90 text-red-500/90" : "text-black"
+                    likeInfo.hasLiked ? "fill-red-500/90 text-red-500/90" : "text-black"
                 )}
                 strokeWidth={1.5}
             />
-            <p>{likes}</p>
+            <p>{likeInfo.likeCount}</p>
         </Button>
     )
 }

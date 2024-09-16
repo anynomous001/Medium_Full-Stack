@@ -14,21 +14,43 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  email    String  @unique
-  password String
-  name     String?
-  posts    Post[]
+  id        String      @id @default(uuid())
+  email     String      @unique
+  password  String
+  name      String?
+  posts     Post[]
+  likedPost LikedPost[]
+  SavedPost SavedPost[]
 }
 
 model Post {
-  id        String  @id @default(uuid())
+  id        String      @id @default(uuid())
   title     String
   date      String?
   content   String
-  likes     Int     @default(0)
-  isLiked   Boolean @default(false)
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
+  published Boolean     @default(false)
+  author    User        @relation(fields: [authorId], references: [id])
   authorId  String
+  likedBy   LikedPost[]
+  SavedPost SavedPost[]
+}
+
+model LikedPost {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId]) // Ensure a user can like a post only once
+}
+
+model SavedPost {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId]) // Ensure a user can save a post only once
 }

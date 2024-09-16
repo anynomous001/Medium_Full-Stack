@@ -1,15 +1,33 @@
+import { Blog } from "@/hooks";
 import { atom } from "recoil";
 
 
-export interface LikeState {
-    likes: number;
-    isLiked: boolean;
+
+
+export const blogState = atom<Blog | null>({
+    key: 'blogState',
+    default: null
+})
+
+interface LikeState {
+    hasLiked: boolean,
+    likeCount: number
 }
 
-export const likesState = atom<LikeState>({
-    key: 'likesState',
+export const likeState = atom<LikeState>({
+    key: 'likeState',
     default: {
-        likes: 0,
-        isLiked: false,
-    },
+        hasLiked: false,
+        likeCount: 0
+    }
+})
+interface SaveState {
+    hasSaved: boolean
+}
+
+export const saveState = atom<SaveState>({
+    key: 'saveState',
+    default: {
+        hasSaved: false
+    }
 })

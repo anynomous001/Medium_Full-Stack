@@ -1,18 +1,24 @@
 import axios from "axios"
 import React from "react"
 import { BACKEND_URL } from "../config"
-import { useRecoilState } from "recoil"
-import { LikeState, likesState } from "@/recoil/atom"
+import { useRecoilState, useSetRecoilState } from "recoil"
+import { blogState, likeState } from "@/recoil/atom"
 
 export interface Blog {
-    id: string,
-    title: string,
-    date: string,
-    content: string,
+    id: string;
+    title: string;
+    date: string | null;
+    content: string;
+    likedBy: string[];  // Array of user IDs who liked the post
+    _count: {
+        likedBy: number;  // Count of how many users liked the post
+    };
     author: {
-        name: string
-    }
+        name: string;
+        id: string;
+    };
 }
+
 
 export const useBlogs = () => {
 
@@ -67,73 +73,87 @@ export const useBlogs = () => {
 // }
 
 
-export const updateLikes = async ({ id, likes, isLiked }: { id: string, likes: number, isLiked: boolean }) => {
+// export const updateLikes = async ({ id, likes, isLiked }: { id: string, likes: number, isLiked: boolean }) => {
 
 
-    // console.log(likes + '  inside updateLikes   ' + isLiked)
+//     // console.log(likes + '  inside updateLikes   ' + isLiked)
 
-    try {
-        const response = await axios.put(
-            `${BACKEND_URL}/api/h1/blog/${id}/likes`,
-            { likes, isLiked },
-            {
-                headers: {
-                    Authorization: localStorage.getItem("token"),
-                }
-            }
-        );
-        console.log(response);
-    } catch (error) {
-        console.error("Error updating likes", error);
-    }
-};
-
-
-
+//     try {
+//         const response = await axios.put(
+//             `${BACKEND_URL}/api/h1/blog/${id}/likes`,
+//             { likes, isLiked },
+//             {
+//                 headers: {
+//                     Authorization: localStorage.getItem("token"),
+//                 }
+//             }
+//         );
+//         console.log(response);
+//     } catch (error) {
+//         console.error("Error updating likes", error);
+//     }
+// };
 
 
 
-export const useGetLikes = ({ id }: { id: string }) => {
-
-    const [{ likes, isLiked }, setLikeState] = useRecoilState<LikeState>(likesState);
 
 
 
-    React.useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/h1/blog/${id}/likes`, {
-            headers: {
-                Authorization: localStorage.getItem("token")
-            }
-        }).then(response => {
-            setLikeState(() => ({
-                isLiked: response.data.postLikes.isLiked,
-                likes: response.data.postLikes.likes,
-            }));
-            // console.log(response.data.postLikes.likes + '   inside useGetLikes  inside useEffect  ')
-        })
+// export const useGetLikes = ({ id }: { id: string }) => {
 
-    }, [])
+//     const [{ likes, isLiked }, setLikeState] = useRecoilState<LikeState>(likesState);
 
-    // console.log(likes + '  inside useGetLikes outside useEffect  ' + isLiked)
-    return {
-        likes, isLiked
-    }
+
+
+//     React.useEffect(() => {
+//         axios.get(`${BACKEND_URL}/api/h1/blog/${id}/likes`, {
+//             headers: {
+//                 Authorization: localStorage.getItem("token")
+//             }
+//         }).then(response => {
+//             setLikeState(() => ({
+//                 isLiked: response.data.postLikes.isLiked,
+//                 likes: response.data.postLikes.likes,
+//             }));
+//             // console.log(response.data.postLikes.likes + '   inside useGetLikes  inside useEffect  ')
+//         })
+
+//     }, [])
+
+//     // console.log(likes + '  inside useGetLikes outside useEffect  ' + isLiked)
+//     return {
+//         likes, isLiked
+//     }
+// }
+
+
+interface BlogResponse {
+    post: Blog,
+    hasliked: boolean
 }
 
 
 export const useBlog = ({ id }: { id: string }) => {
 
+
+    const [blog, setBlog] = useRecoilState(blogState)
     const [loading, setLoading] = React.useState(true);
-    const [blog, setBlog] = React.useState<Blog>();
+    const [likeInfo, setLikeInfo] = useRecoilState(likeState)
 
     React.useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/h1/blog/${id}`, {
+        axios.get<BlogResponse>(`${BACKEND_URL}/api/h1/blog/${id}`, {
             headers: {
                 Authorization: localStorage.getItem("token")
             }
         }).then(response => {
+            console.log(response.data.post._count, response.data.hasliked)
             setBlog(response.data.post);
             setLoading(false);
+            setLikeInfo(() => ({
+                likeCount: response.data.post._count.likedBy, // Spread the previous state to keep other properties
+                hasLiked: response.data.hasliked, // Update the `hasLiked` property
+            }));
+
         })
     }, [])
 
@@ -186,10 +206,6 @@ export const useUserDetails = () => {
     }
 }
 
-
-
-
-
 export const useDate = () => {
     const today = new Date();
     const day = today.getDate();
@@ -209,3 +225,6 @@ export const useDate = () => {
     const date = `${day}${daySuffix(day)} ${month} ${year}`
     return { date };
 }
+
+
+

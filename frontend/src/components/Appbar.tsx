@@ -5,6 +5,12 @@ import { SquarePen } from 'lucide-react'
 import AvatarSkeleton from './AvatarSkeleton'
 import Avatar from './Avatar'
 
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 
 
@@ -27,7 +33,17 @@ const Appbar = () => {
                         </Button>
                     </Link>
                     {loading ? <AvatarSkeleton size='big' /> :
-                        <Avatar name={userDetails?.name || 'U'} size='big' />
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Avatar name={userDetails?.name || 'U'} size='big' />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Profile</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+
                     }
 
                 </div>
