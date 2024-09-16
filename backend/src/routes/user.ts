@@ -129,7 +129,6 @@ userRouter.get('/details', async (c) => {
 
 
     try {
-
         const user = await prisma.user.findFirst({
             where: {
                 id: authorId
