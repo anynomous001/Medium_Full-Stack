@@ -20,6 +20,7 @@ model User {
   name      String?
   posts     Post[]
   likedPost LikedPost[]
+  SavedPost SavedPost[]
 }
 
 model Post {
@@ -31,6 +32,7 @@ model Post {
   author    User        @relation(fields: [authorId], references: [id])
   authorId  String
   likedBy   LikedPost[]
+  SavedPost SavedPost[]
 }
 
 model LikedPost {
@@ -41,4 +43,14 @@ model LikedPost {
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId]) // Ensure a user can like a post only once
+}
+
+model SavedPost {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId]) // Ensure a user can save a post only once
 }

@@ -471,13 +471,69 @@ blogRouter.post('/:id/like-toggle', async (c) => {
         c.status(200)
         return c.json({ hasliked: haslikedNow, likeCount })
     } catch (error) {
-
+        c.status(403)
+        return c.json({ Message: error })
     }
 
 
 
 
 })
+
+blogRouter.post('/:id/save-toggle', async (c) => {
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const postId = c.req.param('id')
+    const userId = c.get('userId')
+
+
+    try {
+        const hasSaved = await prisma.savedPost.findFirst({
+            where: {
+                postId,
+                userId
+            }
+        })
+
+
+        if (!hasSaved) {
+            const response = await prisma.savedPost.create({
+                data: {
+                    postId,
+                    userId
+                }
+            })
+
+
+        } else {
+            const response = await prisma.savedPost.delete({
+                where: {
+                    id: hasSaved.id
+                }
+            })
+
+
+        }
+
+        const hasSavedNow = !hasSaved
+        c.status(200)
+        return c.json({ hasSaved: hasSavedNow })
+
+    } catch (error) {
+
+        c.status(403)
+        return c.json({ 'Error': error })
+
+    }
+
+
+})
+
+
+
 
 blogRouter.delete('/:id', async (c) => {
 
@@ -499,8 +555,6 @@ blogRouter.delete('/:id', async (c) => {
         c.status(403)
         return c.json({ message: "Error while deleting the post", error })
     }
-
-
 
 })
 
