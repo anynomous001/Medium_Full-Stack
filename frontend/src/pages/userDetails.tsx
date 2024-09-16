@@ -106,7 +106,6 @@ const UserDetails = () => {
                 </TabsList>
                 <hr />
                 <TabsContent value="account">
-
                     <div>
                         <p className="text-2xl md:text-4xl mt-8 text-slate-500 font-bold">Your Library</p>
                     </div>
