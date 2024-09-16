@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import axios from 'axios'
 import { BACKEND_URL } from '@/config'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { saveState } from '@/recoil/atom'
 
 const SaveComponent = () => {

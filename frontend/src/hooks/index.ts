@@ -138,7 +138,7 @@ export const useBlog = ({ id }: { id: string }) => {
 
     const [blog, setBlog] = useRecoilState(blogState)
     const [loading, setLoading] = React.useState(true);
-    const [likeInfo, setLikeInfo] = useRecoilState(likeState)
+    const setLikeInfo = useSetRecoilState(likeState)
 
     React.useEffect(() => {
         axios.get<BlogResponse>(`${BACKEND_URL}/api/h1/blog/${id}`, {
@@ -165,11 +165,15 @@ export const useBlog = ({ id }: { id: string }) => {
 
 
 export interface UserDetails {
-    id: string,
-    email: string,
-    password: string,
-    name: string,
-    posts: UserPosts[]
+    id: string;
+    email: string;
+    password: string;
+    name: string;
+    posts: UserPosts[];
+    likedPost: UserPosts[];
+    SavedPost: {
+        post: UserPosts;
+    }[];
 }
 
 type UserPosts = {
