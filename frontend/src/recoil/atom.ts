@@ -21,3 +21,13 @@ export const likeState = atom<LikeState>({
         likeCount: 0
     }
 })
+interface SaveState {
+    hasSaved: boolean
+}
+
+export const saveState = atom<SaveState>({
+    key: 'saveState',
+    default: {
+        hasSaved: false
+    }
+})

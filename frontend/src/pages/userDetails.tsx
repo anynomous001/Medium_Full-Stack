@@ -70,7 +70,7 @@ const UserDetails = () => {
         )
     }
 
-
+    console.log(userDetails)
 
 
 
@@ -96,42 +96,48 @@ const UserDetails = () => {
 
 
                 </div>
-                {/* <div className="w-full flex flex-col items-center space-y-12 mx-auto py-20 ">
-                    <div><p className="text-2xl md:text-4xl text-slate-500 font-bold">Your Posts</p></div>
-                    {loading ?
-                        <div className="md:w-full md:ml-40">
-                            <BlogSkeleton />
-                            <BlogSkeleton />
-                            <BlogSkeleton />
-                            <BlogSkeleton />
-                        </div> : userDetails?.posts.length === 0 ?
-                            <div className="flex items-center pt-32">
-                                <p className="text-2xl text-slate-500/40 block font-bold mr-4">
-                                    No Posts to Show !!
-                                </p>
-                                <span className="block"><Frown className="w-8 h-8 text-slate-500/40  font-bold block" /></span>
-                            </div>
-                            :
-                            userDetails?.posts.map(blog => <Blogcards
-                                key={blog.id}
-                                id={blog.id}
-                                authorName={userDetails.name || "Anonymous"}
-                                title={blog.title}
-                                content={blog.content}
-                                publishedDate={blog.date ? blog.date : "No Date"}
-                            />)
-                    }
-                </div>
-*/}
+
             </div>
             <hr />
             <Tabs defaultValue="account" className="mx-12 bg-white">
-                <TabsList className="gap-8 mb-[1px]">
+                <TabsList className="gap-6 mb-[1px]">
                     <TabsTrigger className="text-black font-semibold text-2xl " value="account">Home</TabsTrigger>
                     <TabsTrigger className="text-black font-semibold text-2xl" value="password">About</TabsTrigger>
                 </TabsList>
                 <hr />
-                <TabsContent value="account">Your Library</TabsContent>
+                <TabsContent value="account">
+
+                    <div>
+                        <p className="text-2xl md:text-4xl mt-8 text-slate-500 font-bold">Your Library</p>
+                    </div>
+                    <div className="w-full flex flex-col items-center  space-y-10 mx-auto py-10 ">
+                        {loading ?
+                            <div className="md:w-full md:ml-40">
+                                <BlogSkeleton />
+                                <BlogSkeleton />
+                                <BlogSkeleton />
+                                <BlogSkeleton />
+                            </div> : userDetails?.SavedPost.length === 0 ?
+                                <div className="flex items-center pt-32">
+                                    <p className="text-2xl text-slate-500/40 block font-bold mr-4">
+                                        No Posts to Show !!
+                                    </p>
+                                    <span className="block"><Frown className="w-8 h-8 text-slate-500/40  font-bold block" /></span>
+                                </div>
+                                :
+                                userDetails?.SavedPost.map(blog => <Blogcards
+                                    key={blog.post.id}
+                                    id={blog.post.id}
+                                    authorName={userDetails.name || "Anonymous"}
+                                    title={blog.post.title}
+                                    content={blog.post.content}
+                                    publishedDate={blog.post.date ? blog.post.date : "No Date"}
+                                />)
+                        }
+                    </div>
+
+
+                </TabsContent>
                 <TabsContent value="password">About You Goes Here.</TabsContent>
             </Tabs>
 

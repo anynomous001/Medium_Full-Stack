@@ -146,7 +146,7 @@ userRouter.get('/details', async (c) => {
                     }
                 },
                 SavedPost: {
-                    include: {
+                    select: {
                         post: true
                     }
                 }

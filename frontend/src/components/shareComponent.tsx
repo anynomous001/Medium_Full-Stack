@@ -1,10 +1,11 @@
-import { BookMarked, Facebook, Ghost, MessageCircle, SquareArrowOutUpRight, Twitter } from "lucide-react"
+import { Facebook, MessageCircle, SquareArrowOutUpRight, Twitter } from "lucide-react"
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "./ui/dropdown-menu"
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import LikeComponent from "./LikeComponent";
 import TooltipWrapper from "./ToolTipWrapper";
+import SaveComponent from "./saveComponent";
 
 
 const ShareComponent = () => {
@@ -12,7 +13,7 @@ const ShareComponent = () => {
     return (
         <>
             <hr></hr>
-            <div className="flex items-center justify-between mx-4">
+            <div className="flex items-center justify-between mx">
                 <div className="flex items-center space-x-4 py-3">
                     <div className="">
                         <DropdownMenu>
@@ -60,12 +61,7 @@ const ShareComponent = () => {
                 </div >
                 <div>
                     <TooltipWrapper tooltipContent={'Save'} triggerText={
-                        <Button variant={'ghost'} size={'icon'}>
-                            <BookMarked
-                                className={cn("w-8 h-8")}
-                                strokeWidth={1.5}
-                            />
-                        </Button>
+                        <SaveComponent />
                     } />
                 </div>
             </div>
