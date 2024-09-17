@@ -12,7 +12,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
     return (
         <div>
             <Appbar />
-            <div className='mb-24 flex flex-col gap-x-20 md:grid grid-cols-12 md:px-12 px-7 '>
+            <div className='mb-24 flex flex-col gap-x-20 md:grid grid-cols-12 md:px-12 px-7  '>
                 <div className='col-span-8'>
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
                     <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold mb-8'>{`Posted on ${blog.date === null ? 'No Date' : blog.date}`}</div>
@@ -21,7 +21,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                 </div>
 
 
-                <div className='col-span-4 pr-4 md:mt-0 mt-10'>
+                <div className='col-span-4 pr-4 md:mt-0 mt-10 '>
                     <div className='text-xl font-bold text-gray-400'>Author</div>
                     <div className='flex flex-col mt-2'>
                         <div className='flex gap-2'>
@@ -37,6 +37,32 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                         </p>
                     </div>
 
+
+                    <div className=' mt-6  border-2 border-blue-600 border-solid space-x-3'>
+                        <p>Comments</p>
+                        <div className='my-3'>
+                            <div className='flex gap-3 mt-3'>
+                                <Avatar size='small' name={'u'} />
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
+                                    consequatur perspiciatis nesciunt commodi. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
+                                    consequatur perspiciatis nesciunt commodi. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
+                                    consequatur perspiciatis nesciunt commodi.
+                                </p>
+                            </div>
+                            <div className='flex gap-3 mt-3'>
+                                <Avatar size='small' name={'u'} />
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
+                                    consequatur perspiciatis nesciunt commodi. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
+                                    consequatur perspiciatis nesciunt commodi. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
+                                    consequatur perspiciatis nesciunt commodi.
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
 
 
 
