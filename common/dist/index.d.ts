@@ -69,3 +69,11 @@ export declare const updateBlogInput: z.ZodObject<{
     id: number;
 }>;
 export type updateBlogType = z.infer<typeof updateBlogInput>;
+export declare const commentInput: z.ZodObject<{
+    content: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    content: string;
+}, {
+    content: string;
+}>;
+export type commentInputType = z.infer<typeof commentInput>;

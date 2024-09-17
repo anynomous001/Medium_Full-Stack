@@ -38,7 +38,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                     </div>
 
 
-                    <div className=' mt-6  border-2 border-blue-600 border-solid space-x-3'>
+                    <div className=' mt-12  border-2 border-blue-600 border-solid space-x-3'>
                         <p>Comments</p>
                         <div className='my-3'>
                             <div className='flex gap-3 mt-3'>

@@ -22,6 +22,7 @@ model User {
   posts     Post[]
   likedPost LikedPost[]
   SavedPost SavedPost[]
+  Comment   Comment[]
 }
 
 model Post {
@@ -34,6 +35,7 @@ model Post {
   authorId  String
   likedBy   LikedPost[]
   SavedPost SavedPost[]
+  Comment   Comment[]
 }
 
 model LikedPost {
@@ -54,4 +56,15 @@ model SavedPost {
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId]) // Ensure a user can save a post only once
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String // This is the actual comment text
+  createdAt DateTime @default(now()) // Timestamp for when the comment was created
+  updatedAt DateTime @updatedAt // Automatically updates when the comment is modified
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

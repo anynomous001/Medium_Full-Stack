@@ -38,3 +38,10 @@ export const updateBlogInput = z.object({
     content: z.string()
 })
 export type updateBlogType = z.infer<typeof updateBlogInput>;
+
+
+export const commentInput = z.object({
+    content: z.string()
+})
+
+export type commentInputType = z.infer<typeof commentInput>

@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { verify } from "hono/jwt";
 import { Prisma, PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { createBlogInput, updateBlogInput } from "@pritamchak/common-package";
+import { commentInput, createBlogInput, updateBlogInput } from "@pritamchak/common-package";
 
 
 
@@ -181,7 +181,8 @@ blogRouter.get('/:id', async (c) => {
                     where: {
                         userId: userId
                     }
-                }
+                },
+                Comment: true
             }
         })
 
@@ -496,6 +497,8 @@ blogRouter.post('/:id/save-toggle', async (c) => {
     const userId = c.get('userId')
 
 
+
+
     try {
         const hasSaved = await prisma.savedPost.findFirst({
             where: {
@@ -564,6 +567,43 @@ blogRouter.delete('/:id', async (c) => {
 
 })
 
+
+blogRouter.post('/:id/comments', async (c) => {
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const blogId = c.req.param('id')
+    const userId = c.get('userId')
+    const body = await c.req.json()
+
+    const { success } = commentInput.safeParse(body)
+
+    if (!success) {
+        c.status(411)
+        return c.json('Validation error')
+    }
+
+
+
+    try {
+        await prisma.comment.create({
+            data: {
+                postId: blogId,
+                userId: userId,
+                content: body.content
+            }
+        })
+
+
+        c.status(200)
+        return c.json('Comment Added')
+    } catch (error) {
+        c.status(403)
+        return c.json({ message: 'error ocurred while commenting!', error })
+    }
+})
 
 // blogRouter.get('/:id/likes', async (c) => {
 
