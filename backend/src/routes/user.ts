@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign, verify } from "hono/jwt";
-import { signinInput, signupInput } from "@pritamchak/common-package"
+import { signinInput, signupInput, updateUserInput } from "@pritamchak/common-package"
 
 export const userRouter = new Hono<{
     Bindings: {
@@ -138,6 +138,7 @@ userRouter.get('/details', async (c) => {
                 email: true,
                 password: true,
                 name: true,
+                about: true,
                 posts: true,
                 likedPost: {
                     include: {
@@ -158,7 +159,44 @@ userRouter.get('/details', async (c) => {
         c.status(403)
         return c.json({ error: "error while fetching user details!!" })
     }
+})
 
 
+userRouter.put('/details', async (c) => {
 
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const userId = c.get('userId')
+    const body = await c.req.json()
+
+    const { success } = updateUserInput.safeParse(body)
+
+    if (!success) {
+        c.status(411)
+        console.log('validated')
+        return c.json("Incorrect Input")
+    }
+
+
+    try {
+        const response = await prisma.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                name: body.name,
+                password: body.password,
+                email: body.email,
+                about: body.about
+            }
+        })
+
+        c.status(200)
+        return c.json({ message: 'User Details Updated', response })
+    } catch (error) {
+        c.status(403)
+        return c.json({ message: 'Error Occurred', error })
+    }
 })

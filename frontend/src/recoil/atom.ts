@@ -31,3 +31,42 @@ export const saveState = atom<SaveState>({
         hasSaved: false
     }
 })
+
+
+type UserPosts = {
+    id: string,
+    title: string,
+    date: string,
+    content: string,
+    published: boolean,
+    authorId: string
+
+}
+
+
+export interface UserDetails {
+    id: string;
+    email: string;
+    password: string;
+    name: string;
+    about: string;
+    posts: UserPosts[];
+    likedPost: UserPosts[];
+    SavedPost: {
+        post: UserPosts;
+    }[];
+}
+
+export const userInfo = atom<UserDetails>({
+    key: 'userInfo',
+    default: {
+        id: '',
+        email: '',
+        password: '',
+        name: '',
+        about: '',
+        posts: [],
+        likedPost: [],
+        SavedPost: []
+    }
+})

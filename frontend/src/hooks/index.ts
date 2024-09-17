@@ -2,7 +2,7 @@ import axios from "axios"
 import React from "react"
 import { BACKEND_URL } from "../config"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { blogState, likeState } from "@/recoil/atom"
+import { blogState, likeState, UserDetails, userInfo } from "@/recoil/atom"
 
 export interface Blog {
     id: string;
@@ -164,31 +164,13 @@ export const useBlog = ({ id }: { id: string }) => {
 }
 
 
-export interface UserDetails {
-    id: string;
-    email: string;
-    password: string;
-    name: string;
-    posts: UserPosts[];
-    likedPost: UserPosts[];
-    SavedPost: {
-        post: UserPosts;
-    }[];
-}
 
-type UserPosts = {
-    id: string,
-    title: string,
-    date: string,
-    content: string,
-    published: boolean,
-    authorId: string
 
-}
+
 
 export const useUserDetails = () => {
     const [loading, setLoading] = React.useState(true);
-    const [userDetails, setUserDetails] = React.useState<UserDetails>();
+    const [userDetails, setUserDetails] = useRecoilState<UserDetails>(userInfo);
 
     React.useEffect(() => {
         axios.get(`${BACKEND_URL}/api/h1/user/details`, {

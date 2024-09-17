@@ -1,12 +1,23 @@
 import z from 'zod'
 
 export const signupInput = z.object({
+    name: z.string().optional(),
     email: z.string().email(),
-    password: z.string(),
-    name: z.string().optional()
+    password: z.string().min(6),
+    about: z.string().optional()
+})
+export type SignupType = z.infer<typeof signupInput>;
+
+export const updateUserInput = z.object({
+    name: z.string().optional(),
+    email: z.string().email().optional(),
+    password: z.string().min(6).optional(),
+    about: z.string().optional()
 })
 
-export type SignupType = z.infer<typeof signupInput>;
+export type UpdateUserType = z.infer<typeof updateUserInput>
+
+
 
 export const signinInput = z.object({
     email: z.string().email(),
