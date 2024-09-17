@@ -2,7 +2,7 @@ import axios from "axios"
 import React from "react"
 import { BACKEND_URL } from "../config"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { blogState, likeState, UserDetails, userInfo } from "@/recoil/atom"
+import { blogState, likeState, saveState, UserDetails, userInfo } from "@/recoil/atom"
 
 export interface Blog {
     id: string;
@@ -129,16 +129,18 @@ export const useBlogs = () => {
 
 interface BlogResponse {
     post: Blog,
-    hasliked: boolean
+    hasliked: boolean,
+    hasSaved: boolean
 }
 
 
 export const useBlog = ({ id }: { id: string }) => {
 
+    const [loading, setLoading] = React.useState(true);
 
     const [blog, setBlog] = useRecoilState(blogState)
-    const [loading, setLoading] = React.useState(true);
     const setLikeInfo = useSetRecoilState(likeState)
+    const setSaveInfo = useSetRecoilState(saveState)
 
     React.useEffect(() => {
         axios.get<BlogResponse>(`${BACKEND_URL}/api/h1/blog/${id}`, {
@@ -147,8 +149,10 @@ export const useBlog = ({ id }: { id: string }) => {
             }
         }).then(response => {
             console.log(response.data.post._count, response.data.hasliked)
+            console.log(response.data.hasSaved)
             setBlog(response.data.post);
             setLoading(false);
+            setSaveInfo({ hasSaved: response.data.hasSaved })
             setLikeInfo(() => ({
                 likeCount: response.data.post._count.likedBy, // Spread the previous state to keep other properties
                 hasLiked: response.data.hasliked, // Update the `hasLiked` property

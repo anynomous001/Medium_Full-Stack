@@ -11,18 +11,15 @@ const SaveComponent = () => {
 
     const [saveInfo, setSaveInfo] = useRecoilState(saveState)
     const { id } = useParams()
-
-
-
+    console.log(saveInfo.hasSaved)
     const handleSave = async () => {
         axios.post(`${BACKEND_URL}/api/h1/blog/${id}/save-toggle`, {}, {
             headers: {
                 Authorization: localStorage.getItem("token")
             }
         }).then(response => {
-
-            setSaveInfo(response.data.hasSaved)
-            console.log(response.data.hasSaved)
+            setSaveInfo({ hasSaved: response.data.hasSaved })
+            console.log(saveInfo)
         })
     }
 
@@ -36,7 +33,7 @@ const SaveComponent = () => {
         >
             <BookMarked
                 className={cn("w-8 h-8",
-                    saveInfo ? "text-slate-400/100 pointer-events-none" : "text-black"
+                    saveInfo.hasSaved ? "text-slate-400/100 pointer-events-none" : "text-black"
                 )}
                 strokeWidth={1.5}
 

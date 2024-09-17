@@ -176,14 +176,20 @@ blogRouter.get('/:id', async (c) => {
                         name: true,
                         id: true
                     }
+                },
+                SavedPost: {
+                    where: {
+                        userId: userId
+                    }
                 }
             }
         })
 
 
         const hasliked = post ? post.likedBy.length > 0 : false
+        const hasSaved = post ? post.SavedPost.length > 0 : false
         c.status(200)
-        return c.json({ post, hasliked })
+        return c.json({ post, hasliked, hasSaved })
     } catch (error) {
         c.status(403)
         return c.json({ message: "Error while fetching  post", error })
