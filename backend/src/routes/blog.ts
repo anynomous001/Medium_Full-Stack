@@ -182,7 +182,16 @@ blogRouter.get('/:id', async (c) => {
                         userId: userId
                     }
                 },
-                Comment: true
+
+                Comment: {
+                    select: {
+                        content: true,
+                        commenter: true
+                    }
+                }
+
+
+
             }
         })
 
@@ -578,12 +587,12 @@ blogRouter.post('/:id/comments', async (c) => {
     const userId = c.get('userId')
     const body = await c.req.json()
 
-    const { success } = commentInput.safeParse(body)
+    // const { success } = commentInput.safeParse(body)
 
-    if (!success) {
-        c.status(411)
-        return c.json('Validation error')
-    }
+    // if (!success) {
+    //     c.status(411)
+    //     return c.json('Validation error')
+    // }
 
 
 
@@ -592,11 +601,10 @@ blogRouter.post('/:id/comments', async (c) => {
             data: {
                 postId: blogId,
                 userId: userId,
-                content: body.content
+                content: body.content,
+                commenter: body.name
             }
         })
-
-
         c.status(200)
         return c.json('Comment Added')
     } catch (error) {

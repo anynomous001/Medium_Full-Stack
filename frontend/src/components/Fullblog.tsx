@@ -1,14 +1,19 @@
+import { useRecoilValue } from 'recoil'
 import { Blog } from '../hooks'
 import Appbar from './Appbar'
 import Avatar from './Avatar'
 import ShareComponent from './shareComponent'
+import { commentState } from '@/recoil/atom'
+
 
 
 
 
 const Fullblog = ({ blog }: { blog: Blog }) => {
 
+    const comment = useRecoilValue(commentState)
 
+    console.log(comment)
     return (
         <div>
             <Appbar />
@@ -19,7 +24,6 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                     <ShareComponent />
                     <div className='text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium'>{blog.content}</div>
                 </div>
-
 
                 <div className='col-span-4 pr-4 md:mt-0 mt-10 '>
                     <div className='text-xl font-bold text-gray-400'>Author</div>
@@ -41,24 +45,16 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                     <div className=' mt-12  border-2 border-blue-600 border-solid space-x-3'>
                         <p>Comments</p>
                         <div className='my-3'>
-                            <div className='flex gap-3 mt-3'>
-                                <Avatar size='small' name={'u'} />
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
-                                    consequatur perspiciatis nesciunt commodi. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
-                                    consequatur perspiciatis nesciunt commodi. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
-                                    consequatur perspiciatis nesciunt commodi.
-                                </p>
-                            </div>
-                            <div className='flex gap-3 mt-3'>
-                                <Avatar size='small' name={'u'} />
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
-                                    consequatur perspiciatis nesciunt commodi. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
-                                    consequatur perspiciatis nesciunt commodi. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
-                                    consequatur perspiciatis nesciunt commodi.
-                                </p>
-                            </div>
+
+                            {
+                                comment?.map((comments) => (<div key={Math.random()} className='flex gap-3 mt-3' >
+                                    <Avatar size='small' name={`${comments.commenter}` || 'Anynomous'} />
+                                    <p>
+                                        {comments.content}
+                                    </p>
+                                </div>
+                                ))
+                            }
 
                         </div>
 

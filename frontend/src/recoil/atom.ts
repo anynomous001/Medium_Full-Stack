@@ -70,3 +70,25 @@ export const userInfo = atom<UserDetails>({
         SavedPost: []
     }
 })
+
+
+export interface CommentState {
+    content: string;
+    commenter: string;
+}
+
+export const commentState = atom<CommentState[]>({
+    key: 'commentState',
+    default: []
+})
+
+
+export interface CommentMessage {
+    message: string;
+}
+export const commentMessageState = atom<CommentMessage>({
+    key: 'commentMessageState',
+    default: {
+        message: ''
+    }
+});

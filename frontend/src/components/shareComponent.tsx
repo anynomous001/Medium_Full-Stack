@@ -1,11 +1,11 @@
-import { Facebook, MessageCircle, SquareArrowOutUpRight, Twitter } from "lucide-react"
+import { Facebook, SquareArrowOutUpRight, Twitter } from "lucide-react"
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "./ui/dropdown-menu"
 import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
 import LikeComponent from "./LikeComponent";
 import TooltipWrapper from "./ToolTipWrapper";
 import SaveComponent from "./saveComponent";
+import CommentSidebar from "./comment-Sidebar";
 
 
 const ShareComponent = () => {
@@ -42,17 +42,7 @@ const ShareComponent = () => {
                         </DropdownMenu >
                     </div >
                     <div className=" space-x-3">
-                        <TooltipWrapper tooltipContent={'Comment'} triggerText={
-                            <Button
-                                variant={'ghost'}
-                                size={'icon'}
-                            >
-                                <MessageCircle
-                                    className={cn("w-8 h-8")}
-                                    strokeWidth={1.5}
-                                />
-                            </Button>
-                        } />
+                        <CommentSidebar />
                         <TooltipWrapper tooltipContent={'Like'} triggerText={<LikeComponent />
                         } />
 

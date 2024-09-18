@@ -2,7 +2,10 @@ import axios from "axios"
 import React from "react"
 import { BACKEND_URL } from "../config"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { blogState, likeState, saveState, UserDetails, userInfo } from "@/recoil/atom"
+import { blogState, CommentState, commentState, likeState, saveState, UserDetails, userInfo } from "@/recoil/atom"
+
+
+
 
 export interface Blog {
     id: string;
@@ -17,6 +20,7 @@ export interface Blog {
         name: string;
         id: string;
     };
+    Comment: CommentState[]
 }
 
 
@@ -141,6 +145,7 @@ export const useBlog = ({ id }: { id: string }) => {
     const [blog, setBlog] = useRecoilState(blogState)
     const setLikeInfo = useSetRecoilState(likeState)
     const setSaveInfo = useSetRecoilState(saveState)
+    const setCommentInfo = useSetRecoilState(commentState)
 
     React.useEffect(() => {
         axios.get<BlogResponse>(`${BACKEND_URL}/api/h1/blog/${id}`, {
@@ -148,13 +153,17 @@ export const useBlog = ({ id }: { id: string }) => {
                 Authorization: localStorage.getItem("token")
             }
         }).then(response => {
-            console.log(response.data.post._count, response.data.hasliked)
-            console.log(response.data.hasSaved)
-            setBlog(response.data.post);
+            const post = response.data.post
+            const formattedCommentInfo: CommentState[] = post.Comment.map(comment => ({
+                content: comment.content,
+                commenter: comment.commenter
+            }))
+            setCommentInfo(formattedCommentInfo)
+            setBlog(post);
             setLoading(false);
             setSaveInfo({ hasSaved: response.data.hasSaved })
             setLikeInfo(() => ({
-                likeCount: response.data.post._count.likedBy, // Spread the previous state to keep other properties
+                likeCount: post._count.likedBy, // Spread the previous state to keep other properties
                 hasLiked: response.data.hasliked, // Update the `hasLiked` property
             }));
 
@@ -175,6 +184,7 @@ export const useBlog = ({ id }: { id: string }) => {
 export const useUserDetails = () => {
     const [loading, setLoading] = React.useState(true);
     const [userDetails, setUserDetails] = useRecoilState<UserDetails>(userInfo);
+
 
     React.useEffect(() => {
         axios.get(`${BACKEND_URL}/api/h1/user/details`, {

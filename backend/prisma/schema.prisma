@@ -61,6 +61,7 @@ model SavedPost {
 model Comment {
   id        String   @id @default(uuid())
   content   String // This is the actual comment text
+  commenter String
   createdAt DateTime @default(now()) // Timestamp for when the comment was created
   updatedAt DateTime @updatedAt // Automatically updates when the comment is modified
   postId    String
