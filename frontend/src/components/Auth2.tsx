@@ -2,22 +2,70 @@ import { useForm } from "react-hook-form";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { signupInput, SignupType } from "@pritamchak/common-package";
+import { BACKEND_URL } from "@/config";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Auth2 = () => {
 
-    const { register, handleSubmit, getValues, reset, formState: { errors, isSubmitting } } = useForm()
+    const navigate = useNavigate()
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<SignupType>({
+        resolver: zodResolver(signupInput),
+    })
 
-    const onSubmit = async () => {
+    const onSubmit = async (data: SignupType) => {
+
+        try {
+            const response = await axios.post(`${BACKEND_URL}/api/h1/user/auth`,
+                {
+                    email: 454,
+                    password: "45555",
+                    name: 454
+                }
+            )
+            navigate('/blogs')
+            localStorage.setItem('token', response.data.jwt)
+        } catch (error) {
+            console.log(error.response.data.errors)
+
+            const errorData = error.response.data
+            if (errorData.errors) {
+                const errors = errorData.errors;
+
+                if (errors.email) {
+                    setError("email", {
+                        type: "server",
+                        message: errors.email,
+                    });
+                }
+                if (errors.name) {
+                    setError("name", {
+                        type: "server",
+                        message: errors.name,
+                    });
+                }
+                if (errors.password) {
+                    setError("password", {
+                        type: "server",
+                        message: errors.password,
+                    });
+                } else {
+                    alert("Something went wrong!");
+                }
+            }
+
+        }
 
 
 
-        await new Promise((resolve) => setTimeout(resolve, 300))
 
-        reset()
+
     }
-
 
     return (
         <div className="bg-white-200 h-screen flex justify-center items-center flex-col "  >
@@ -27,19 +75,17 @@ const Auth2 = () => {
                     id='name'
                     type="text"
                     placeholder="Name"
-                    {...register('text', { required: 'Name is required' })}
+                    {...register('name')}
                 />
-                {errors.text && (
-                    <p className="text-red-500">{`${errors.text.message}`}</p>
+                {errors.name && (
+                    <p className="text-red-500">{`${errors.name.message}`}</p>
                 )}
 
                 <Label htmlFor="username">username</Label>
                 <Input id='username'
                     type="email"
                     placeholder="username"
-                    {...register("email", {
-                        required: "Email is required"
-                    })}
+                    {...register("email")}
                 />
                 {
                     errors.email && <p className="text-red-500">{`${errors.email.message}`}</p>
@@ -50,32 +96,12 @@ const Auth2 = () => {
                     id='password'
                     type="password"
                     placeholder="password"
-
-                    {...register("password", {
-                        required: "password is required",
-                        minLength: {
-                            value: 5,
-                            message: "Password must be at least 5 characters long"
-                        }
-                    })}
+                    {...register("password")}
                 />
                 {
                     errors.password && <p className="text-red-500">{`${errors.password.message}`}</p>
                 }
-                <Label htmlFor="confirmPassword">Confirm Password </Label>
-                <Input
-                    {...register("confirmPassword", {
-                        required: "Confirm password is required",
-                        validate: (value) =>
-                            value === getValues("password") || "Passwords must match",
-                    })}
-                    type="password"
-                    placeholder="Confirm password"
-                    className="px-4 py-2 rounded"
-                />
-                {errors.confirmPassword && (
-                    <p className="text-red-500">{`${errors.confirmPassword.message}`}</p>
-                )}
+
 
 
                 <Button

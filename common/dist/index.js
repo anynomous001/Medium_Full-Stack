@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.commentInput = exports.updateBlogInput = exports.createBlogInput = exports.signinInput = exports.updateUserInput = exports.signupInput = void 0;
 const zod_1 = __importDefault(require("zod"));
 exports.signupInput = zod_1.default.object({
-    name: zod_1.default.string().optional(),
-    email: zod_1.default.string().email(),
-    password: zod_1.default.string().min(6),
+    name: zod_1.default.string().min(1, "Name is required"),
+    email: zod_1.default.string().email("Please enter a valid email address"),
+    password: zod_1.default.string().min(6, "Password must be at least 6 characters long"),
     about: zod_1.default.string().optional()
 });
 exports.updateUserInput = zod_1.default.object({
@@ -18,8 +18,8 @@ exports.updateUserInput = zod_1.default.object({
     about: zod_1.default.string().optional()
 });
 exports.signinInput = zod_1.default.object({
-    email: zod_1.default.string().email(),
-    password: zod_1.default.string().min(6)
+    email: zod_1.default.string().email("Please enter a valid email address"),
+    password: zod_1.default.string().min(6, "Password must be at least 6 characters long"),
 });
 exports.createBlogInput = zod_1.default.object({
     title: zod_1.default.string(),

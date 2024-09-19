@@ -25,17 +25,28 @@ export const userRouter = new Hono<{
 
 
 
-userRouter.post('/signup', async (c) => {
+userRouter.post('/auth', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
 
     const body = await c.req.json()
-    const { success } = signupInput.safeParse(body)
+    const { success, error } = signupInput.safeParse(body)
 
+
+
+
+    let zodErrors = {};
     if (!success) {
-        c.status(411)
-        return c.json("Incorrect Input")
+        error.issues.forEach((issue) => {
+            zodErrors = { ...zodErrors, [issue.path[0]]: issue.message }
+        })
+
+
+        c.status(403)
+        return c.json(
+            Object.keys(zodErrors).length > 0 ? { errors: zodErrors } : { success: true }
+        )
     }
 
 
@@ -49,6 +60,7 @@ userRouter.post('/signup', async (c) => {
         })
 
         const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
+        c.status(200)
         return c.json({ jwt })
 
     } catch (error) {
