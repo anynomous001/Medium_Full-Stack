@@ -53,7 +53,6 @@ const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
         <div className=" bg-white-200 h-screen flex justify-center items-center flex-col">
             <div className='' >
                 <div className='text-center'>
-
                     <h2 className='font-bold text-3xl ' >Create An Account</h2>
                     <p className='text-slate-400 font-semibold ' >
                         {type === 'signup' ? 'Already have an account?' : "Don't have an account?"}
