@@ -24,50 +24,64 @@ export const userRouter = new Hono<{
 
 
 
-
 userRouter.post('/auth', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
 
-    const body = await c.req.json()
-    const { success, error } = signupInput.safeParse(body)
-
-
-
+    const body = await c.req.json();
+    const { success, error } = signupInput.safeParse(body);
 
     let zodErrors = {};
+
     if (!success) {
         error.issues.forEach((issue) => {
-            zodErrors = { ...zodErrors, [issue.path[0]]: issue.message }
-        })
+            zodErrors = { ...zodErrors, [issue.path[0]]: issue.message };
+        });
 
-
-        c.status(403)
+        c.status(403);
         return c.json(
             Object.keys(zodErrors).length > 0 ? { errors: zodErrors } : { success: true }
-        )
+        );
     }
 
-
     try {
+        const checkUser = await prisma.user.findFirst({
+            where: {
+                email: body.email,
+            },
+        });
+
+        if (checkUser) {
+            // Add user existence error to zodErrors
+            zodErrors.email = 'This email is already taken!';
+
+            c.status(403);
+            return c.json({ errors: zodErrors });
+        }
+
         const user = await prisma.user.create({
             data: {
                 email: body.email,
                 password: body.password,
-                name: body.name
-            }
-        })
+                name: body.name,
+            },
+        });
 
         const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
-        c.status(200)
-        return c.json({ jwt })
+        c.status(200);
+        return c.json({ jwt });
 
     } catch (error) {
-        c.status(403)
-        return c.json({ error });
+        // Return any caught errors, including Zod validation errors
+        c.status(403);
+        return c.json({
+            errors: zodErrors, // Ensure we return zodErrors if they exist
+            message: error.message || 'An error occurred',
+        });
     }
-})
+});
+
 
 userRouter.post('/signin', async (c) => {
 

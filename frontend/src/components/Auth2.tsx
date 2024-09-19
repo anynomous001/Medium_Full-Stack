@@ -23,17 +23,17 @@ const Auth2 = () => {
         try {
             const response = await axios.post(`${BACKEND_URL}/api/h1/user/auth`,
                 {
-                    email: 454,
-                    password: "45555",
-                    name: 454
+                    email: data.email,
+                    password: data.password,
+                    name: 22
                 }
             )
             navigate('/blogs')
             localStorage.setItem('token', response.data.jwt)
-        } catch (error) {
-            console.log(error.response.data.errors)
+        } catch ({ response }) {
+            console.log(response.data.errors)
 
-            const errorData = error.response.data
+            const errorData = response.data
             if (errorData.errors) {
                 const errors = errorData.errors;
 
@@ -54,8 +54,6 @@ const Auth2 = () => {
                         type: "server",
                         message: errors.password,
                     });
-                } else {
-                    alert("Something went wrong!");
                 }
             }
 
