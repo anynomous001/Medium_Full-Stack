@@ -23,7 +23,6 @@ const QuoteComponent = () => {
                 authorSlug: response.data[0].authorSlug,
             }));
 
-
             console.log(response.data[0].content)
         } catch (error) {
             console.log(error)
