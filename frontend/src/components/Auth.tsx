@@ -38,6 +38,7 @@ const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
                             message: errors.email,
                         });
                     }
+
                     if (errors.name) {
                         setError("name", {
                             type: "server",
