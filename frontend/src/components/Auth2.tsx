@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { signupInput, SignupType } from "@pritamchak/common-package";
 import { BACKEND_URL } from "@/config";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 
 
@@ -21,55 +21,57 @@ const Auth2 = () => {
     const onSubmit = async (data: SignupType) => {
 
         try {
-            const response = await axios.post(`${BACKEND_URL}/api/h1/user/auth`,
-                {
-                    email: data.email,
-                    password: data.password,
-                    name: 22
-                }
-            )
+            const response = await axios.post(`${BACKEND_URL}/api/h1/user/auth`, data)
             navigate('/blogs')
             localStorage.setItem('token', response.data.jwt)
-        } catch ({ response }) {
-            console.log(response.data.errors)
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            const response = axiosError.response;
 
-            const errorData = response.data
-            if (errorData.errors) {
-                const errors = errorData.errors;
+            if (response) {
+                console.log(response);
+                const errorData: any = response.data;
 
-                if (errors.email) {
-                    setError("email", {
-                        type: "server",
-                        message: errors.email,
-                    });
-                }
-                if (errors.name) {
-                    setError("name", {
-                        type: "server",
-                        message: errors.name,
-                    });
-                }
-                if (errors.password) {
-                    setError("password", {
-                        type: "server",
-                        message: errors.password,
-                    });
+                if (errorData.errors) {
+                    const errors = errorData.errors;
+
+                    if (errors.email) {
+                        setError("email", {
+                            type: "server",
+                            message: errors.email,
+                        });
+                    }
+                    if (errors.name) {
+                        setError("name", {
+                            type: "server",
+                            message: errors.name,
+                        });
+                    }
+                    if (errors.password) {
+                        setError("password", {
+                            type: "server",
+                            message: errors.password,
+                        });
+                    }
                 }
             }
-
         }
-
-
-
-
-
     }
+
+
+
+
+
+
 
     return (
         <div className="bg-white-200 h-screen flex justify-center items-center flex-col "  >
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name"
+                    className='block mb-2 '
+                >Name</Label>
                 <Input
+                    className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
                     id='name'
                     type="text"
                     placeholder="Name"
@@ -79,8 +81,14 @@ const Auth2 = () => {
                     <p className="text-red-500">{`${errors.name.message}`}</p>
                 )}
 
-                <Label htmlFor="username">username</Label>
-                <Input id='username'
+                <Label
+                    className='block mb-2 '
+                    htmlFor="username">
+                    username
+                </Label>
+                <Input
+                    className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                    id='username'
                     type="email"
                     placeholder="username"
                     {...register("email")}
@@ -89,8 +97,13 @@ const Auth2 = () => {
                     errors.email && <p className="text-red-500">{`${errors.email.message}`}</p>
                 }
 
-                <Label htmlFor="password">password</Label>
+                <Label
+                    className='block mb-2 '
+                    htmlFor="password">
+                    password
+                </Label>
                 <Input
+                    className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
                     id='password'
                     type="password"
                     placeholder="password"

@@ -7,7 +7,6 @@ import Blog from './pages/Blog'
 import Blogs from './pages/Blogs'
 import PublishBlog from './pages/PublishBlog'
 import UserDetails from './pages/userDetails'
-import Authentication from './pages/authentication'
 
 function App() {
 
@@ -24,7 +23,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Signup />} />
-          <Route path='/auth' element={<Authentication />} />
           <Route path='/signin' element={<Signin />} />
           <Route element={<ProtectedRoutes />} >
             <Route path='/blog/:id' element={<Blog />} />
