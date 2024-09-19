@@ -20,7 +20,7 @@ const Auth2 = () => {
 
 
     return (
-        <div className="bg-white-200 h-screen flex justify-center items-center flex-col"  >
+        <div className="bg-white-200 h-screen flex justify-center items-center flex-col "  >
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -50,8 +50,13 @@ const Auth2 = () => {
                     id='password'
                     type="password"
                     placeholder="password"
+
                     {...register("password", {
-                        required: "password is required"
+                        required: "password is required",
+                        minLength: {
+                            value: 5,
+                            message: "Password must be at least 5 characters long"
+                        }
                     })}
                 />
                 {
