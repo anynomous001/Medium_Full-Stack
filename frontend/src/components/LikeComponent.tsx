@@ -10,7 +10,6 @@ import axios from "axios"
 
 
 const LikeComponent = () => {
-    // bad practice prop drilling 
     const { id } = useParams()
     const [likeInfo, setLikeInfo] = useRecoilState(likeState)
 

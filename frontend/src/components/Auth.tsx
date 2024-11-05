@@ -1,4 +1,4 @@
-import { SignupType } from '@pritamchak/common-package';
+import { signinInput, SigninType, SignupType } from '@pritamchak/common-package';
 import axios, { AxiosError } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from '../config';
@@ -11,8 +11,8 @@ import { signupInput } from "@pritamchak/common-package";
 
 const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
     const navigate = useNavigate()
-    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<SignupType>({
-        resolver: zodResolver(signupInput),
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<SignupType | SigninType>({
+        resolver: zodResolver(type === 'signup' ? signupInput : signinInput),
     })
 
     const onSubmit = async (data: SignupType) => {
@@ -56,6 +56,44 @@ const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
         }
     }
 
+
+    const onSubmit2 = async (data: SigninType) => {
+
+
+
+        console.log('onsubmit 2 clicked')
+        try {
+            const response = await axios.post(`${BACKEND_URL}/api/h1/user/signin`, data)
+            navigate('/blogs')
+            localStorage.setItem('token', response.data.jwt)
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            const response = axiosError.response;
+
+            if (response) {
+                console.log(response);
+                const errorData: any = response.data;
+
+                if (errorData.errors) {
+                    const errors = errorData.errors;
+
+                    if (errors.email) {
+                        setError("email", {
+                            type: "server",
+                            message: errors.email,
+                        });
+                    }
+                    if (errors.password) {
+                        setError("password", {
+                            type: "server",
+                            message: errors.password,
+                        });
+                    }
+                }
+            }
+        }
+    }
+
     return (
         <div className=" bg-white-200 h-screen flex justify-center items-center flex-col">
             <div className='' >
@@ -70,7 +108,7 @@ const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
                         </span>
                     </p>
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={type === 'signup' ? handleSubmit(onSubmit) : handleSubmit(onSubmit2)}>
                     {type === 'signup' ? (
                         <>
                             <Label htmlFor="name" className="block mb-2">
@@ -127,7 +165,11 @@ const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
                         type="submit"
                         className='border border-blue-200 text-lg text-bold rounded-lg focus:border focus:border-slate-200 w-full bg-slate-800 text-white  p-2.5 mt-4 ' variant={'ghost'}
                     >
-                        Signup
+                        {
+                            type === 'signup' ?
+                                isSubmitting ? 'Signing up...' : 'Sign up' :
+                                isSubmitting ? 'Logging in...' : 'Login'
+                        }
                     </Button>
                 </form>
             </div>

@@ -7,8 +7,6 @@ import { commentState } from '@/recoil/atom'
 
 
 
-
-
 const Fullblog = ({ blog }: { blog: Blog }) => {
 
     const comment = useRecoilValue(commentState)
@@ -55,7 +53,6 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                                 </div>
                                 ))
                             }
-
                         </div>
 
                     </div>

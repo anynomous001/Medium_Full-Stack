@@ -39,7 +39,7 @@ userRouter.post('/auth', async (c) => {
             zodErrors = { ...zodErrors, [issue.path[0]]: issue.message };
         });
 
-        c.status(403);
+        c.status(411);
         return c.json(
             Object.keys(zodErrors).length > 0 ? { errors: zodErrors } : { success: true }
         );
@@ -91,11 +91,20 @@ userRouter.post('/signin', async (c) => {
 
     const body = await c.req.json()
 
-    const { success } = signinInput.safeParse(body)
+    const { success, error } = signinInput.safeParse(body)
+
+    let zodErrors = {}
+
 
     if (!success) {
         c.status(411)
-        return c.json("Incorrect2 Input")
+        error.issues.forEach((issue) => {
+            zodErrors = { ...zodErrors, [issue.path[0]]: issue.message }
+        })
+        return c.json(
+            Object.keys(zodErrors).length > 0 ? { errors: zodErrors } : { success: true }
+        )
+
     }
     try {
         const user = await prisma.user.findUnique({
@@ -104,16 +113,25 @@ userRouter.post('/signin', async (c) => {
             }
         })
 
+
+
         if (!user) {
+            // Add user existence error to zodErrors
+            zodErrors.email = 'User not found!';
+
             c.status(403);
-            return c.json({ error: "user not found" });
+            return c.json({ errors: zodErrors });
+        } else {
+            const jwt = await sign({ id: user.id }, c.env.JWT_SECRET)
+            return c.json({ jwt, user })
         }
-        const jwt = await sign({ id: user.id }, c.env.JWT_SECRET)
-        return c.json({ jwt, user })
 
     } catch (error) {
         c.status(403)
-        return c.json({ error });
+        return c.json({
+            errors: zodErrors,
+            message: error.message || 'Unexpected error occurred!'
+        });
     }
 })
 
