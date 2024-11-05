@@ -60,7 +60,7 @@ const Auth2 = ({ type }: { type: 'signin' | 'signup' }) => {
 
     return (
         <div className="bg-white-200 h-screen flex justify-center items-center flex-col "  >
-            <div className='' >
+            <div className='space-y-6' >
                 <div className='text-center'>
                     <h2 className='font-bold text-3xl ' >Log into your account</h2>
                     <p className='text-slate-400 font-semibold ' >
@@ -73,11 +73,11 @@ const Auth2 = ({ type }: { type: 'signin' | 'signup' }) => {
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
                     <Label
-                        className='block mb-2 '
+                        className='block mb-2 text-base'
                         htmlFor="username">
-                        username
+                        Username
                     </Label>
                     <Input
                         className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
@@ -91,9 +91,9 @@ const Auth2 = ({ type }: { type: 'signin' | 'signup' }) => {
                     }
 
                     <Label
-                        className='block mb-2 '
+                        className='block mb-2 text-base '
                         htmlFor="password">
-                        password
+                        Password
                     </Label>
                     <Input
                         className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
@@ -109,7 +109,7 @@ const Auth2 = ({ type }: { type: 'signin' | 'signup' }) => {
                     <Button
                         disabled={isSubmitting}
                         type="submit"
-                        className="bg-blue-500 disabled:bg-gray-500 py-2 rounded"
+                        className='border border-blue-200 text-lg text-bold rounded-lg focus:border focus:border-slate-200 w-full bg-slate-800 text-white  p-2.5 mt-4 '
                         variant={'ghost'}
                     >
                         {isSubmitting ? 'Logging in...' : 'Login'}
