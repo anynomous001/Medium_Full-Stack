@@ -1,4 +1,4 @@
-import { signinInput, SigninType, SignupType } from '@pritamchak/common-package';
+import { SignupType } from '@pritamchak/common-package';
 import axios, { AxiosError } from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from '../config';
@@ -11,8 +11,8 @@ import { signupInput } from "@pritamchak/common-package";
 
 const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
     const navigate = useNavigate()
-    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<SignupType | SigninType>({
-        resolver: zodResolver(type === 'signup' ? signupInput : signinInput),
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<SignupType>({
+        resolver: zodResolver(signupInput)
     })
 
     const onSubmit = async (data: SignupType) => {
@@ -57,42 +57,7 @@ const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
     }
 
 
-    const onSubmit2 = async (data: SigninType) => {
 
-
-
-        console.log('onsubmit 2 clicked')
-        try {
-            const response = await axios.post(`${BACKEND_URL}/api/h1/user/signin`, data)
-            navigate('/blogs')
-            localStorage.setItem('token', response.data.jwt)
-        } catch (error) {
-            const axiosError = error as AxiosError;
-            const response = axiosError.response;
-
-            if (response) {
-                console.log(response);
-                const errorData: any = response.data;
-
-                if (errorData.errors) {
-                    const errors = errorData.errors;
-
-                    if (errors.email) {
-                        setError("email", {
-                            type: "server",
-                            message: errors.email,
-                        });
-                    }
-                    if (errors.password) {
-                        setError("password", {
-                            type: "server",
-                            message: errors.password,
-                        });
-                    }
-                }
-            }
-        }
-    }
 
     return (
         <div className=" bg-white-200 h-screen flex justify-center items-center flex-col">
@@ -108,24 +73,23 @@ const Auth = ({ type }: { type: 'signin' | 'signup' }) => {
                         </span>
                     </p>
                 </div>
-                <form onSubmit={type === 'signup' ? handleSubmit(onSubmit) : handleSubmit(onSubmit2)}>
-                    {type === 'signup' ? (
-                        <>
-                            <Label htmlFor="name" className="block mb-2">
-                                Name
-                            </Label>
-                            <Input
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                id="name"
-                                type="text"
-                                placeholder="Name"
-                                {...register('name')}
-                            />
-                            {errors.name && (
-                                <p className="text-red-500">{`${errors.name.message}`}</p>
-                            )}
-                        </>
-                    ) : null}
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <>
+                        <Label htmlFor="name" className="block mb-2">
+                            Name
+                        </Label>
+                        <Input
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            id="name"
+                            type="text"
+                            placeholder="Name"
+                            {...register('name')}
+                        />
+                        {errors.name && (
+                            <p className="text-red-500">{`${errors.name.message}`}</p>
+                        )}
+                    </>
+
                     <Label
                         className='block mb-2'
                         htmlFor="username">

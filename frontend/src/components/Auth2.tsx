@@ -7,11 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signinInput, SigninType } from "@pritamchak/common-package";
 import { BACKEND_URL } from "@/config";
 import axios, { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
-const Auth2 = () => {
+const Auth2 = ({ type }: { type: 'signin' | 'signup' }) => {
 
     const navigate = useNavigate()
     const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<SigninType>({
@@ -60,48 +60,62 @@ const Auth2 = () => {
 
     return (
         <div className="bg-white-200 h-screen flex justify-center items-center flex-col "  >
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Label
-                    className='block mb-2 '
-                    htmlFor="username">
-                    username
-                </Label>
-                <Input
-                    className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
-                    id='username'
-                    type="email"
-                    placeholder="username"
-                    {...register("email")}
-                />
-                {
-                    errors.email && <p className="text-red-500">{`${errors.email.message}`}</p>
-                }
+            <div className='' >
+                <div className='text-center'>
+                    <h2 className='font-bold text-3xl ' >Log into your account</h2>
+                    <p className='text-slate-400 font-semibold ' >
+                        {type === 'signup' ? 'Already have an account?' : "Don't have an account?"}
+                        <span className='underline '>
+                            <Link to={type === 'signin' ? '/' : type === 'signup' ? '/signin' : ''}>
+                                {type === 'signin' ? 'Signup' : type === 'signup' ? 'Login' : ''}
+                            </Link>
+                        </span>
+                    </p>
+                </div>
 
-                <Label
-                    className='block mb-2 '
-                    htmlFor="password">
-                    password
-                </Label>
-                <Input
-                    className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
-                    id='password'
-                    type="password"
-                    placeholder="password"
-                    {...register("password")}
-                />
-                {
-                    errors.password && <p className="text-red-500">{`${errors.password.message}`}</p>
-                }
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Label
+                        className='block mb-2 '
+                        htmlFor="username">
+                        username
+                    </Label>
+                    <Input
+                        className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                        id='username'
+                        type="email"
+                        placeholder="username"
+                        {...register("email")}
+                    />
+                    {
+                        errors.email && <p className="text-red-500">{`${errors.email.message}`}</p>
+                    }
 
-                <Button
-                    disabled={isSubmitting}
-                    type="submit"
-                    className="bg-blue-500 disabled:bg-gray-500 py-2 rounded"
-                    variant={'ghost'}
-                >
-                    {isSubmitting ? 'Logging in...' : 'Login'}
-                </Button>
-            </form>
+                    <Label
+                        className='block mb-2 '
+                        htmlFor="password">
+                        password
+                    </Label>
+                    <Input
+                        className='bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                        id='password'
+                        type="password"
+                        placeholder="password"
+                        {...register("password")}
+                    />
+                    {
+                        errors.password && <p className="text-red-500">{`${errors.password.message}`}</p>
+                    }
+
+                    <Button
+                        disabled={isSubmitting}
+                        type="submit"
+                        className="bg-blue-500 disabled:bg-gray-500 py-2 rounded"
+                        variant={'ghost'}
+                    >
+                        {isSubmitting ? 'Logging in...' : 'Login'}
+                    </Button>
+                </form>
+            </div>
         </div>
     )
 }
