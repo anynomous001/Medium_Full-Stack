@@ -10,8 +10,8 @@ export type SignupType = z.infer<typeof signupInput>;
 
 export const updateUserInput = z.object({
     name: z.string().optional(),
-    email: z.string().email().optional(),
-    password: z.string().min(6).optional(),
+    email: z.string().email("Please enter a valid email address").optional(),
+    password: z.string().min(6, "password must be atleast 6 characters long").optional(),
     about: z.string().optional()
 })
 

@@ -30,7 +30,7 @@ export function DialogDemo() {
                 name: userDetails.name,
                 password: userDetails.password,
                 email: userDetails.email,
-                about: userDetails.about
+                about: userDetails.about || ''
             }, {
                 headers: {
                     Authorization: localStorage.getItem('token')
@@ -69,7 +69,7 @@ export function DialogDemo() {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="username" className="text-right">
-                            password
+                            Password
                         </Label>
                         <Input
                             id="password"
@@ -80,7 +80,7 @@ export function DialogDemo() {
 
                         />
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
+                    {/* <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="username" className="text-right">
                             Email
                         </Label>
@@ -93,7 +93,7 @@ export function DialogDemo() {
                             onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
 
                         />
-                    </div>
+                    </div> */}
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="username" className="text-right">
                             About

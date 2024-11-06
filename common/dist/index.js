@@ -13,8 +13,8 @@ exports.signupInput = zod_1.default.object({
 });
 exports.updateUserInput = zod_1.default.object({
     name: zod_1.default.string().optional(),
-    email: zod_1.default.string().email().optional(),
-    password: zod_1.default.string().min(6).optional(),
+    email: zod_1.default.string().email("Please enter a valid email address").optional(),
+    password: zod_1.default.string().min(6, "password must be atleast 6 characters long").optional(),
     about: zod_1.default.string().optional()
 });
 exports.signinInput = zod_1.default.object({
