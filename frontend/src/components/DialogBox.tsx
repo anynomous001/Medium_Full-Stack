@@ -45,7 +45,7 @@ export function DialogDemo() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Edit Profile</Button>
+                <Button className="mt-4 bg-white font-bold text-lg" variant="outline">Edit Profile</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>

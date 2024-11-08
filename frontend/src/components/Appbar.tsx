@@ -19,10 +19,10 @@ const Appbar = () => {
     const { userDetails, loading } = useUserDetails()
 
     return (
-        <div className='mb-6'>
+        <div className=''>
             <div className='flex items-center justify-between p-4'>
                 <Link to={'/blogs'}>
-                    <div className='font-bold text-xl hover:cursor-pointer hover:text-slate-600'>Medium</div>
+                    <div className=' text-2xl hover:cursor-pointer hover:text-slate-600 font-extrabold'>Readium</div>
                 </Link>
                 <div className='flex gap-5  items-center'>
                     <Link to={'/publish'}>

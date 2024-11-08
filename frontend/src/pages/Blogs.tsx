@@ -20,19 +20,22 @@ const Blogs = () => {
 
 
     return (
-        <div>
+        <div  >
             <Appbar />
-            <div className='flex flex-col items-center gap-12'>
-                {
-                    blogs.map(blog => <Blogcards
-                        key={blog.id}
-                        id={blog.id}
-                        authorName={blog.author.name || "Anonymous"}
-                        title={blog.title}
-                        content={blog.content}
-                        publishedDate={blog.date ? blog.date : "No Date"}
-                    />)
-                }
+            <div className='bg-[#f8f9fa] pt-8' >
+
+                <div className='flex flex-col items-center gap-6'>
+                    {
+                        blogs.map(blog => <Blogcards
+                            key={blog.id}
+                            id={blog.id}
+                            authorName={blog.author.name || "Anonymous"}
+                            title={blog.title}
+                            content={blog.content}
+                            publishedDate={blog.date ? blog.date : "No Date"}
+                        />)
+                    }
+                </div>
             </div>
         </div>
 
