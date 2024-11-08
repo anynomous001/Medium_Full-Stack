@@ -1,4 +1,3 @@
-import React from 'react'
 import Appbar from '../components/Appbar'
 import axios, { AxiosError } from 'axios'
 import { BACKEND_URL } from '../config'
@@ -16,8 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 
 const PublishBlog = () => {
-    const [title, setTitle] = React.useState('')
-    const [content, setContent] = React.useState('')
+
     const navigate = useNavigate()
     const { date } = useDate()
 
