@@ -22,8 +22,8 @@ exports.signinInput = zod_1.default.object({
     password: zod_1.default.string().min(6, "Password must be at least 6 characters long"),
 });
 exports.createBlogInput = zod_1.default.object({
-    title: zod_1.default.string(),
-    content: zod_1.default.string()
+    title: zod_1.default.string().min(10, "title must be atleast 10 characters long"),
+    content: zod_1.default.string().min(30, "title must be atleast 30 characters long")
 });
 exports.updateBlogInput = zod_1.default.object({
     id: zod_1.default.number(),

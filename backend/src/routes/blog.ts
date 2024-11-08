@@ -47,12 +47,20 @@ blogRouter.post('/', async (c) => {
     const authorId = c.get('userId')
     const body = await c.req.json()
 
-    const { success } = createBlogInput.safeParse(body)
+    const { success, error } = createBlogInput.safeParse(body)
+
+    let zodErrors = {}
 
     if (!success) {
         c.status(411)
-        return c.json("Incorrect Input")
+        error.issues.forEach((issue) => {
+            return zodErrors = { ...zodErrors, [issue.path[0]]: issue.message }
+        })
+        return c.json(
+            Object.keys(zodErrors).length > 0 ? { errors: zodErrors } : { success: true }
+        )
     }
+
 
     try {
         const post = await prisma.post.create({
@@ -67,7 +75,10 @@ blogRouter.post('/', async (c) => {
         return c.json({ post })
     } catch (error) {
         c.status(403)
-        return c.json({ message: "Error while uploading the  post" })
+        return c.json({
+            errors: zodErrors,
+            message: error.message || "Error while uploading the  post"
+        })
     }
 })
 

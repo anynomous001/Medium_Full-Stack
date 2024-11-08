@@ -27,11 +27,13 @@ export const signinInput = z.object({
 export type SigninType = z.infer<typeof signinInput>
 
 export const createBlogInput = z.object({
-    title: z.string(),
-    content: z.string()
+    title: z.string().min(10, "title must be atleast 10 characters long"),
+    content: z.string().min(30, "title must be atleast 30 characters long")
 })
 
 export type createBlogType = z.infer<typeof createBlogInput>;
+
+
 export const updateBlogInput = z.object({
     id: z.number(),
     title: z.string(),
