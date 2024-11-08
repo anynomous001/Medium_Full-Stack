@@ -28,10 +28,10 @@ const PublishBlog = () => {
 
     const onSubmit = async (data: createBlogType) => {
 
-
+        const dataWithDate = { ...data, date }
         try {
 
-            const response = await axios.post(`${BACKEND_URL}/api/h1/blog`, { data, date }, {
+            const response = await axios.post(`${BACKEND_URL}/api/h1/blog`, dataWithDate, {
                 headers: {
                     Authorization: localStorage.getItem('token')
                 }
