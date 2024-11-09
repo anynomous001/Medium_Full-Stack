@@ -15,7 +15,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
     return (
         <div>
             <Appbar />
-            <div className='mb-24 flex flex-col gap-x-20 md:grid grid-cols-12 md:px-12 px-7  '>
+            <div className='md:mb-0 pb-24 flex flex-col gap-x-20 md:grid grid-cols-12 md:px-12 px-7 bg-[#f8f9fa] pt-8 h-auto '>
                 <div className='col-span-8'>
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
                     <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold mb-8'>{`Posted on ${blog.date === null ? 'No Date' : blog.date}`}</div>

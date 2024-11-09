@@ -27,8 +27,8 @@ const ShareComponent = () => {
                                     } />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem>
+                            <DropdownMenuContent >
+                                <DropdownMenuItem >
                                     <FacebookShareButton url={window.location.href} >
                                         <Facebook />
                                     </FacebookShareButton >

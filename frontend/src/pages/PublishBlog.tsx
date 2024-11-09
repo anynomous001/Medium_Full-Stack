@@ -66,7 +66,7 @@ const PublishBlog = () => {
     return (
         <div >
             <Appbar />
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center pt-8 bg-[#f8f9fa] min-h-screen '>
 
                 <form className='space-y-8 w-3/4 ' onSubmit={handleSubmit(onSubmit)} >
                     <div>
@@ -74,7 +74,7 @@ const PublishBlog = () => {
                         <input
                             type="search"
                             id="default-search"
-                            className="block w-full p-4 ps-10  text-lg font-semibold border border-gray-300 rounded-lg bg-gray-50 focus:outline-gray-200"
+                            className="block w-full p-4 ps-10  text-2xl text-slate-400 font-semibold border border-gray-300 rounded-lg bg-gray-50 focus:outline-gray-200"
                             placeholder="Title"
                             {...register('title')}
                         />
@@ -83,7 +83,7 @@ const PublishBlog = () => {
                     </div>
                     <div>
                         <Textarea
-                            className='mt-10 bg-gray-50 focus:outline-gray-200 text-lg font-semibold text-slate-400' placeholder='Write your blog here ...'
+                            className='mt-10 bg-gray-50 focus:outline-gray-200 text-xl font-bold  text-slate-400' placeholder='Write your blog here ...'
                             {...register('content')}
                         />
                         {errors.content && <p className='text-red-500'>{errors.content.message}</p>}
@@ -102,7 +102,7 @@ const PublishBlog = () => {
                           */}
 
                     <Button
-                        className='border border-blue-200 text-lg mt-6 text-bold rounded-lg focus:border focus:border-slate-200  bg-slate-800 text-white  p-2.5'
+                        className='border border-blue-200 py-6 px-5 mt-6 text-bold text-xl rounded-lg focus:border focus:border-slate-200  bg-slate-800 text-white  '
                         disabled={isSubmitting}
                         type='submit'
                         variant={'ghost'}

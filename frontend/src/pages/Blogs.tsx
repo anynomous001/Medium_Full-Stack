@@ -14,6 +14,8 @@ const Blogs = () => {
             <BlogSkeleton />
             <BlogSkeleton />
             <BlogSkeleton />
+            <BlogSkeleton />
+            <BlogSkeleton />
         </div>
     }
 
@@ -22,9 +24,9 @@ const Blogs = () => {
     return (
         <div  >
             <Appbar />
-            <div className='bg-[#f8f9fa] pt-8' >
+            <div className='bg-[#f8f9fa] flex justify-center  pt-8' >
 
-                <div className='flex flex-col items-center gap-6'>
+                <div className='flex  flex-col w-3/4 items-center  gap-6'>
                     {
                         blogs.map(blog => <Blogcards
                             key={blog.id}

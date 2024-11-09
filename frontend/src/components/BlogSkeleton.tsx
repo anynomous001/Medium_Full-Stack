@@ -2,7 +2,7 @@
 
 const BlogSkeleton = () => {
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center bg-[#f8f9fa]'>
             <div className='flex flex-col w-3/4 md:w-1/2 gap-4 my-4'>
                 <div className='flex flex-col  gap-4 '>
                     <div className='flex items-center gap-6 '>

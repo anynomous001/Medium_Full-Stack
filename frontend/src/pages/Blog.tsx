@@ -21,7 +21,7 @@ const Blog = () => {
     }
 
     return (
-        <div>
+        <div className='bg-[#f8f9fa] h-auto '>
             <Fullblog blog={blog} />
         </div>
     )

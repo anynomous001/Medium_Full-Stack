@@ -88,7 +88,7 @@ const CommentSidebar = () => {
                 </div>
                 <SheetFooter>
                     <SheetClose>
-                        <Button size={'sm'} onClick={handleComment} className="mt-3" >Send</Button>
+                        <Button size={'sm'} onClick={handleComment} className="mt-3 bg-gray-700" >Send</Button>
                     </SheetClose>
                 </SheetFooter>
             </SheetContent>

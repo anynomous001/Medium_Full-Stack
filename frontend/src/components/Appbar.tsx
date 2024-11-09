@@ -26,7 +26,7 @@ const Appbar = () => {
                 </Link>
                 <div className='flex gap-5  items-center'>
                     <Link to={'/publish'}>
-                        <Button className='space-y-10 rounded-3xl text-xl font-light py-5' size={'sm'} >
+                        <Button className='space-y-10 rounded-md text-xl font-light px-6 py-6 bg-gray-700' size={'sm'} >
 
                             <SquarePen className='w-6 h-6 mr-3' />
                             Write
