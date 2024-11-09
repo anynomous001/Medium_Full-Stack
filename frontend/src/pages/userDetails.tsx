@@ -1,5 +1,4 @@
 import Appbar from "@/components/Appbar"
-import Avatar from "@/components/Avatar"
 import AvatarSkeleton from "@/components/AvatarSkeleton"
 import Blogcards from "@/components/Blogcards"
 import BlogSkeleton from "@/components/BlogSkeleton"
