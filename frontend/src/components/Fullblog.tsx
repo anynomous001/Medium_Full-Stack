@@ -11,11 +11,13 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
 
     const comment = useRecoilValue(commentState)
 
-    console.log(comment)
+    console.log(blog)
+
+
     return (
         <div>
             <Appbar />
-            <div className='md:mb-0 pb-24 flex flex-col gap-x-20 md:grid grid-cols-12 md:px-12 px-7 bg-[#f8f9fa] pt-8 h-auto '>
+            <div className='md:mb-0 pb-24 flex flex-col gap-x-20 md:grid grid-cols-12 md:px-12 px-7 bg-[#f8f9fa] pt-8 h-auto min-h-screen '>
                 <div className='col-span-8'>
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
                     <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold mb-8'>{`Posted on ${blog.date === null ? 'No Date' : blog.date}`}</div>
@@ -33,9 +35,8 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                             </div>
                         </div>
                         <p className='text-base font-normal text-gray-400'>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus
-                            consequatur perspiciatis nesciunt commodi, libero impedit vitae alias vero
-                            praesentium quo earum omnis voluptate.
+                            {blog.author.about ? blog.author.about :
+                                "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis accusamus consequatur perspiciatis nesciunt commodi, libero impedit vitae alias vero praesentium quo earum omnis voluptate."}
                         </p>
                     </div>
 

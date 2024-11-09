@@ -19,6 +19,7 @@ export interface Blog {
     author: {
         name: string;
         id: string;
+        about: string,
     };
     Comment: CommentState[]
 }
