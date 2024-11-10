@@ -1,7 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { Blog } from '../hooks'
 import Appbar from './Appbar'
-import Avatar from './Avatar'
 import ShareComponent from './shareComponent'
 import { commentState } from '@/recoil/atom'
 
