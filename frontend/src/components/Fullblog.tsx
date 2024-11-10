@@ -29,8 +29,10 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                     <div className='text-xl font-bold text-gray-400'>Author</div>
                     <div className='flex flex-col mt-2'>
                         <div className='flex gap-2'>
-                            <Avatar size='small' name={`${blog.author.name || 'Anynomous'}`} />
-                            <div className=' mb-2 text-lg  md:text-2xl font-bold  text-gray-600'>
+                            <div className='relative  items-center justify-center flex-shrink-0 inline-flex w-8 h-8
+     overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600'>
+                                <span className='text-gray-500    font-bold '>{blog.author.name[0]?.toUpperCase() || 'A'}</span>
+                            </div>                            <div className=' mb-2 text-lg  md:text-2xl font-bold  text-gray-600'>
                                 {`${blog.author.name || 'Anynomous'}`}
                             </div>
                         </div>
@@ -47,7 +49,12 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
 
                             {
                                 comment?.map((comments) => (<div key={Math.random()} className='flex gap-3 mt-3' >
-                                    <Avatar size='small' name={`${comments.commenter}` || 'Anynomous'} />
+
+                                    <div className='relative  items-center justify-center flex-shrink-0 inline-flex w-8 h-8
+     overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600'>
+                                        <span className='text-gray-500    font-bold '>{comments.commenter[0]?.toUpperCase() || 'A'}</span>
+                                    </div>
+
                                     <p>
                                         {comments.content}
                                     </p>
