@@ -21,18 +21,18 @@ const UserDetails = () => {
         <div className="">
             <Appbar />
             <div className="bg-[#f8f9fa] min-h-screen h-auto pt-10 flex flex-col items-center ">
-                <div className="  flex items-center gap-20 w-3/4 mb-20 pt-8 h-80 mx-auto ">
+                <div className="  flex  items-center flex-col md:flex-row gap-8 md:gap-20 w-3/4 mb-20 pt-1 md:pt-8  md:h-80 mx-auto text-none text-center ">
                     {loading ? <AvatarSkeleton size='large' /> :
-                        <div className={`relative  items-center justify-center flex-shrink-0 inline-flex  w-48 h-48 text-3xl
+                        <div className={`relative  items-center justify-center flex-shrink-0 inline-flex  w-24 h-24 text-xl md:w-48 md:h-48 md:text-3xl
      overflow-hidden bg-slate-700 rounded-full dark:bg-gray-600`}>
 
-                            <span className=" text-white text-5xl   font-bold md:text-gray-300">{userDetails?.name[0]?.toUpperCase()}</span>
+                            <span className=" text-white text-4xl md:text-5xl   font-bold md:text-gray-300">{userDetails?.name[0]?.toUpperCase()}</span>
 
                         </div>
                     }
                     <div className="space-y-6">
 
-                        <h1 className="text-5xl text-slate-600/95 font-bold">{userDetails?.name || 'User'} </h1>
+                        <h1 className="text-4xl md:text-5xl text-slate-600/95 font-bold">{userDetails?.name || 'User'} </h1>
                         <div className="max-w-full text-xl font-bold">
                             <div>
                                 <p><span className="text-slate-600">Email</span>  : {userDetails?.email} </p>
@@ -99,4 +99,4 @@ const UserDetails = () => {
     )
 }
 
-export default UserDetails
+export default UserDetails 
