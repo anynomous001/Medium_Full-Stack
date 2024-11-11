@@ -16,6 +16,7 @@ const UserDetails = () => {
 
     const { loading, userDetails } = useUserDetails()
 
+    console.log(userDetails)
 
     return (
         <div className="">
@@ -52,14 +53,36 @@ const UserDetails = () => {
                 <hr />
                 <Tabs defaultValue="account" className="mx-12 bg-[#f8f9fa] w-[90%] md:w-3/4">
                     <TabsList className="gap-6 mb-[2px]">
-                        <TabsTrigger className="text-black font-bold text-2xl" value="account">Home</TabsTrigger>
-                        <TabsTrigger className="text-black font-semibold text-2xl " value="password">About</TabsTrigger>
+                        <TabsTrigger className="text-black font-bold text-lg md:text-2xl" value="ownPost">Home</TabsTrigger>
+                        <TabsTrigger className="text-black font-semibold text-lg md:text-2xl " value="savedPost">Saved Posts</TabsTrigger>
+                        <TabsTrigger className="text-black font-semibold text-lg md:text-2xl " value="about">About</TabsTrigger>
                     </TabsList>
                     <hr />
-                    <TabsContent value="account">
+                    <TabsContent value="ownPost">
                         <div>
-                            <p className="text-2xl md:text-4xl mt-4 text-slate-500 font-bold">Your Library</p>
+                            <p className="text-2xl md:text-4xl mt-4 text-slate-500 font-bold">Your Posts</p>
                         </div>
+                        <div className='flex  flex-col w-[90%] md:w-3/4 items-center gap-1  md:gap-6'>
+                            {
+                                userDetails.posts.map(blog => <Blogcards
+                                    key={blog.id}
+                                    id={blog.id}
+                                    authorName={userDetails.name || "Anonymous"}
+                                    title={blog.title}
+                                    content={blog.content}
+                                    publishedDate={blog.date ? blog.date : "No Date"}
+                                />)
+                            }
+                        </div>
+
+
+                    </TabsContent>
+                    <TabsContent className='text-2xl md:text-4xl mt-4 text-slate-500 font-bold' value="about">{userDetails.about === '' ? <p className="text-2xl text-slate-500/40 block font-bold mr-4">
+                        Update your about details by clicking edit profile.
+                    </p> : userDetails.about}</TabsContent>
+
+                    <TabsContent className='' value="savedPost">
+
                         <div className="w-full flex flex-col items-center space-y-1 md:space-y-10 py-4 md:py-10 ">
                             {loading ?
                                 <div className="md:w-full w-full md:ml-40">
@@ -78,19 +101,16 @@ const UserDetails = () => {
                                     userDetails?.SavedPost.map(blog => <Blogcards
                                         key={blog.post.id}
                                         id={blog.post.id}
-                                        authorName={userDetails.name || "Anonymous"}
+                                        authorName={blog.post.author.name || "Anonymous"}
                                         title={blog.post.title}
                                         content={blog.post.content}
                                         publishedDate={blog.post.date ? blog.post.date : "No Date"}
                                     />)
+
                             }
                         </div>
-
-
                     </TabsContent>
-                    <TabsContent className='text-2xl md:text-4xl mt-4 text-slate-500 font-bold' value="password">{userDetails.about === '' ? <p className="text-2xl text-slate-500/40 block font-bold mr-4">
-                        Update your about details by clicking edit profile.
-                    </p> : userDetails.about}</TabsContent>
+
                 </Tabs>
 
             </div>

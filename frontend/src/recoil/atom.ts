@@ -40,7 +40,9 @@ type UserPosts = {
     content: string,
     published: boolean,
     authorId: string
-
+    author: {
+        name: string
+    }
 }
 
 

@@ -191,7 +191,15 @@ userRouter.get('/details', async (c) => {
                 },
                 SavedPost: {
                     select: {
-                        post: true
+                        post: {
+                            include: {
+                                author: {
+                                    select: {
+                                        name: true
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
