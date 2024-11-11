@@ -12,7 +12,7 @@ export interface BlogcardProps {
 
 const Blogcards = ({ authorName, title, content, publishedDate, id }: BlogcardProps) => {
     return (
-        <Link to={`/blog/${id}`} className='  flex flex-col w-full md:w-3/4 gap-2 text-wrap py-6 hover:bg-slate-600/10 rounded-sm px-3'>
+        <Link to={`/blog/${id}`} className='  flex flex-col w-full md:w-3/4 gap-2 text-wrap py-2 md:py-6 hover:bg-slate-600/10 rounded-sm px-3'>
             <div className='flex flex-col  gap-2 '>
                 <div className='flex items-center justify-between gap-3 md:gap-6 '>
                     <Avatar name={authorName} size='small' />
