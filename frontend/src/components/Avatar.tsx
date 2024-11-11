@@ -25,7 +25,7 @@ function logout() {
 
 export default function Avatar({ name, size }: { name: any, size: 'big' | 'small' | 'large' }) {
     return <div
-        className={`relative  items-center justify-center flex-shrink-0 inline-flex ${size === 'small' ? 'w-8 h-8' : size === 'big' ? 'w-12 h-12' : 'w-48 h-48 text-3xl'}
+        className={`relative  items-center justify-center flex-shrink-0 inline-flex w-8 h-8  md:w-12 md:h-12 ${size === 'small' ? 'w-8 h-8' : size === 'big' ? 'w-12 h-12' : 'w-48 h-48 text-3xl'}
      overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600`}>
         <DropdownMenu>
             <DropdownMenuTrigger>

@@ -22,13 +22,13 @@ const Appbar = () => {
         <div className=''>
             <div className='flex items-center justify-between p-4'>
                 <Link to={'/blogs'}>
-                    <div className=' text-2xl hover:cursor-pointer hover:text-slate-600 font-extrabold'>Readium</div>
+                    <div className='text-xl md:text-2xl hover:cursor-pointer hover:text-slate-600 font-extrabold'>Readium</div>
                 </Link>
                 <div className='flex gap-5  items-center'>
                     <Link to={'/publish'}>
-                        <Button className='space-y-10 rounded-md text-xl font-light px-6 py-6 bg-gray-700' size={'sm'} >
+                        <Button className='space-y-10 rounded-md text-lg md:text-xl font-light p-3 md:px-6 md:py-6 bg-gray-700' size={'sm'} >
 
-                            <SquarePen className='w-6 h-6 mr-3' />
+                            <SquarePen className=' w-5 h-5 md:w-6 md:h-6 mr-3' />
                             Write
                         </Button>
                     </Link>
@@ -36,7 +36,7 @@ const Appbar = () => {
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
-                                    <Avatar name={userDetails?.name || 'U'} size='big' />
+                                    <Avatar name={userDetails?.name || 'U'} size='small' />
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Profile</p>
