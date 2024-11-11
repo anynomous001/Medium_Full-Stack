@@ -60,7 +60,7 @@ const UserDetails = () => {
                         <div>
                             <p className="text-2xl md:text-4xl mt-4 text-slate-500 font-bold">Your Library</p>
                         </div>
-                        <div className="w-full flex flex-col items-center  space-y-10 py-10 ">
+                        <div className="w-full flex flex-col items-center space-y-1 md:space-y-10 py-4 md:py-10 ">
                             {loading ?
                                 <div className="md:w-full w-full md:ml-40">
                                     <BlogSkeleton />
