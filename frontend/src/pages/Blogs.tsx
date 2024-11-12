@@ -29,6 +29,7 @@ const Blogs = () => {
                 <div className='flex  flex-col w-[90%] md:w-3/4 items-center gap-1  md:gap-6'>
                     {
                         blogs.map(blog => <Blogcards
+                            isAuthor={false}
                             key={blog.id}
                             id={blog.id}
                             authorName={blog.author.name || "Anonymous"}

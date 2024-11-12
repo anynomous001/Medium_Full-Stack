@@ -3,7 +3,7 @@ import AvatarSkeleton from "@/components/AvatarSkeleton"
 import Blogcards from "@/components/Blogcards"
 import BlogSkeleton from "@/components/BlogSkeleton"
 import { Frown } from 'lucide-react';
-import { useUserDetails } from "@/hooks"
+import { useUserDetails, useUserOwnPosts } from "@/hooks"
 
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -15,8 +15,10 @@ import { DialogDemo } from "@/components/DialogBox"
 const UserDetails = () => {
 
     const { loading, userDetails } = useUserDetails()
+    const { loading2, userOwnPosts } = useUserOwnPosts()
 
     console.log(userDetails)
+    console.log(userOwnPosts)
 
     return (
         <div className="">
@@ -63,15 +65,30 @@ const UserDetails = () => {
                             <p className="text-2xl md:text-4xl mt-4 text-slate-500 font-bold">Your Posts</p>
                         </div>
                         <div className='flex  flex-col w-[90%] md:w-3/4 items-center gap-1  md:gap-6'>
-                            {
-                                userDetails.posts.map(blog => <Blogcards
-                                    key={blog.id}
-                                    id={blog.id}
-                                    authorName={userDetails.name || "Anonymous"}
-                                    title={blog.title}
-                                    content={blog.content}
-                                    publishedDate={blog.date ? blog.date : "No Date"}
-                                />)
+                            {loading2 ?
+                                <div className="md:w-full w-full md:ml-40">
+                                    <BlogSkeleton />
+                                    <BlogSkeleton />
+                                    <BlogSkeleton />
+                                    <BlogSkeleton />
+                                </div>
+                                : userOwnPosts?.posts.length === 0 ?
+                                    <div className="flex min-w-full items-center pt-32">
+                                        <p className="text-2xl text-slate-500/40 block font-bold mr-4">
+                                            No Posts to Show !!
+                                        </p>
+                                        <span className="block"><Frown className="w-8 h-8 text-slate-500/40  font-bold block" /></span>
+                                    </div>
+                                    :
+                                    userOwnPosts.posts.map(blog => <Blogcards
+                                        key={blog.id}
+                                        id={blog.id}
+                                        authorName={userDetails.name || "Anonymous"}
+                                        title={blog.title}
+                                        content={blog.content}
+                                        publishedDate={blog.date ? blog.date : "No Date"}
+                                        isAuthor={true}
+                                    />)
                             }
                         </div>
 
@@ -99,6 +116,7 @@ const UserDetails = () => {
                                     </div>
                                     :
                                     userDetails?.SavedPost.map(blog => <Blogcards
+                                        isAuthor={false}
                                         key={blog.post.id}
                                         id={blog.post.id}
                                         authorName={blog.post.author.name || "Anonymous"}

@@ -136,7 +136,7 @@ userRouter.post('/signin', async (c) => {
 })
 
 
-userRouter.use('/details', async (c, next) => {
+userRouter.use('/details/*', async (c, next) => {
 
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
@@ -170,7 +170,7 @@ userRouter.get('/details', async (c) => {
     }).$extends(withAccelerate());
 
     const authorId = c.get("userId")
-
+    console.log(authorId)
 
     try {
         const user = await prisma.user.findFirst({
@@ -213,6 +213,31 @@ userRouter.get('/details', async (c) => {
     }
 })
 
+userRouter.get('/details/ownpost', async (c) => {
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const authorId = c.get("userId")
+
+    console.log(authorId)
+
+    try {
+        const ownpost = await prisma.user.findFirst({
+            where: { id: authorId },
+            select: {
+                posts: true
+            }
+        });
+
+        return c.json({ ownpost })
+
+    } catch (error) {
+        c.status(403)
+        return c.json(error)
+    }
+})
 
 userRouter.put('/details', async (c) => {
 

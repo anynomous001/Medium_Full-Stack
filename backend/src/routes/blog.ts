@@ -110,7 +110,7 @@ blogRouter.get('/bulk', async (c) => {
 })
 
 
-blogRouter.put('/blog', async (c) => {
+blogRouter.put('/:id', async (c) => {
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());
@@ -572,6 +572,40 @@ blogRouter.delete('/:id', async (c) => {
     }).$extends(withAccelerate());
 
     const postId = c.req.param('id')  // Replace this with the actual post ID
+    const userId = c.get('userId')
+    try {
+        const DeletedResponse = await prisma.post.delete({
+            where: {
+                id: postId
+            }
+        })
+
+
+        const posts = await prisma.post.findMany({
+            where: {
+                authorId: userId
+            }
+        })
+
+        c.status(200)
+        return c.json({ DeletedResponse, posts, message: 'Post Deleted :(' })
+    } catch (error) {
+        c.status(403)
+        return c.json({ message: "Error while deleting the post", error })
+    }
+
+
+
+
+})
+blogRouter.delete('/delete', async (c) => {
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env?.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const body = await c.req.json()
+    const postId = body.id  // Replace this with the actual post ID
 
     try {
         const response = await prisma.post.delete({

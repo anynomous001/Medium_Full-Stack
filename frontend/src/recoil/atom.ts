@@ -44,6 +44,29 @@ type UserPosts = {
         name: string
     }
 }
+type UserOwnPostsType = {
+    id: string,
+    title: string,
+    date: string,
+    content: string,
+    published: boolean,
+    authorId: string
+    author: {
+        name: string
+    }
+}
+export interface UserOwnPosts {
+    posts: UserOwnPostsType[];
+}
+
+export const userOwnPostInfo = atom<UserOwnPosts>({
+    key: 'userOwnPostInfo',
+    default: {
+        posts: []
+    }
+
+})
+
 
 
 export interface UserDetails {

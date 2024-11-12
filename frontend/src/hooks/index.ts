@@ -2,7 +2,7 @@ import axios from "axios"
 import React from "react"
 import { BACKEND_URL } from "../config"
 import { useRecoilState, useSetRecoilState } from "recoil"
-import { blogState, CommentState, commentState, likeState, saveState, UserDetails, userInfo } from "@/recoil/atom"
+import { blogState, CommentState, commentState, likeState, saveState, UserDetails, userInfo, userOwnPostInfo, UserOwnPosts } from "@/recoil/atom"
 
 
 
@@ -177,7 +177,32 @@ export const useBlog = ({ id }: { id: string }) => {
     }
 }
 
+export const useUserOwnPosts = () => {
+    const [loading2, setLoading2] = React.useState(true);
+    const [userOwnPosts, setUserOwnPosts] = useRecoilState<UserOwnPosts>(userOwnPostInfo);
 
+    React.useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/h1/user/details/ownpost`, {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        }).then(response => {
+            console.log(response.data)
+            setUserOwnPosts(response.data.ownpost); // Ensure you're accessing the correct property
+            setLoading2(false);
+        }).catch(error => {
+            console.error('Error fetching user details:', error);
+            setLoading2(false);
+        });
+    }, []);
+
+
+    return {
+        loading2,
+        userOwnPosts
+    }
+
+}
 
 
 
