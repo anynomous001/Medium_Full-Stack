@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import Avatar from './Avatar'
 import { CircleEllipsis } from 'lucide-react';
-import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
