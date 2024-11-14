@@ -51,7 +51,12 @@ const Blogcards = ({ authorName, title, content, publishedDate, id, isAuthor }: 
         <div className='  flex flex-col w-full md:w-3/4 gap-2 text-wrap py-2 md:py-6 hover:bg-slate-600/10 rounded-sm px-3'>
             <div className='flex flex-col  gap-2 '>
                 <div className='flex items-center justify-between gap-3 md:gap-6 '>
-                    <Avatar name={authorName} size='small' />
+                    <div
+                        className={`relative   items-center justify-center flex-shrink-0 inline-flex w-8 h-8  md:w-12 md:h-12 
+     overflow-hidden bg-slate-700 rounded-full dark:bg-gray-600`}>
+                        <span className=" text-gray-100    font-bold :text-gray-300">{authorName[0]?.toUpperCase()}</span>
+
+                    </div>
                     <span className='font-bold text-center text-gray-400 flex items-center text-xs gap-1 md:gap-2'>
                         {authorName} <span>{'.'}</span> {publishedDate}
                         {isAuthor && <span className='hover:cursor-pointer ' >
