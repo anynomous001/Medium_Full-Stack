@@ -53,7 +53,7 @@ const UserDetails = () => {
 
                 </div>
                 <hr />
-                <Tabs defaultValue="account" className="mx-12 bg-[#f8f9fa] w-[90%] md:w-3/4">
+                <Tabs defaultValue="ownPost" className="mx-12 bg-[#f8f9fa] w-[90%] md:w-3/4">
                     <TabsList className="gap-6 mb-[2px]">
                         <TabsTrigger className="text-black font-bold text-lg md:text-2xl" value="ownPost">Home</TabsTrigger>
                         <TabsTrigger className="text-black font-semibold text-lg md:text-2xl " value="savedPost">Saved Posts</TabsTrigger>
