@@ -21,7 +21,7 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
                     <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold mb-8'>{`Posted on ${blog.date === null ? 'No Date' : blog.date}`}</div>
                     <ShareComponent />
-                    <div className='text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium'>{blog.content}</div>
+                    <div className='text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium break-words'>{blog.content}</div>
                 </div>
 
                 <div className='col-span-4 pr-4 md:mt-0 mt-10 '>

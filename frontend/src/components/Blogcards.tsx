@@ -79,7 +79,7 @@ const Blogcards = ({ authorName, title, content, publishedDate, id, isAuthor }: 
                 </div>
                 <Link to={`/blog/${id}`}>
                     <div className='font-bold text-lg md:text-3xl'>{title}</div>
-                    <div className='font-medium mt-1 md:mt-3 text-sm md:text-xl text-wrap w-[90%] text-slate-500'>{`${content.slice(0, 200)} ...`}</div>
+                    <div className='font-medium mt-1 md:mt-3 text-sm md:text-xl text-wrap max-w-[90%] text-slate-500 break-words'>{`${content.slice(0, 100)} ...`}</div>
                     <div className=' my-2 md:my-4 text-xs'>{`Reading ${Math.ceil(content.length / 1000)} minutes`}</div>
                 </Link>
                 <hr />
