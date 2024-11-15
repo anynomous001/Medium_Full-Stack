@@ -74,7 +74,7 @@ const PublishBlog = () => {
                         <input
                             type="search"
                             id="default-search"
-                            className="block w-full p-4 ps-4  text-2xl text-slate-400 font-semibold border border-gray-300 rounded-lg bg-gray-50 focus:outline-gray-200"
+                            className="block w-full py-2 px-1 md:p-4 ps-2 md:ps-4 text:xl  md:text-2xl text-slate-700 font-bold border border-gray-300 rounded-lg bg-gray-50 focus:outline-gray-200"
                             placeholder="Title"
                             {...register('title')}
                         />
