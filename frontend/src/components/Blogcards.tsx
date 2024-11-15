@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import Avatar from './Avatar'
 import { CircleEllipsis } from 'lucide-react';
 import {
     DropdownMenu,
