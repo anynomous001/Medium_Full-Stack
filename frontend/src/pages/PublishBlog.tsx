@@ -68,13 +68,13 @@ const PublishBlog = () => {
             <Appbar />
             <div className='flex flex-col items-center pt-8 bg-[#f8f9fa] min-h-screen '>
 
-                <form className='space-y-3 md:space-y-8 w-3/4 border-2 border-red-100 flex-col justify-end ' onSubmit={handleSubmit(onSubmit)} >
+                <form className='space-y-3 md:space-y-8 w-3/4 flex-col justify-end ' onSubmit={handleSubmit(onSubmit)} >
                     <div>
 
                         <input
                             type="search"
                             id="default-search"
-                            className="block w-full py-2 px-1 md:p-4 ps-2 md:ps-4 text:xl  md:text-2xl text-slate-400 font-bold border border-gray-300 rounded-lg bg-gray-50 focus:outline-gray-200"
+                            className="block w-full py-2 px-1 md:p-4 ps-2 md:ps-4 text:xl  md:text-2xl text-slate-400 font-bold border border-gray-300 rounded-lg bg-gray-50 focus:outline-none"
                             placeholder="Title"
                             {...register('title')}
                         />
@@ -83,7 +83,7 @@ const PublishBlog = () => {
                     </div>
                     <div>
                         <Textarea
-                            className=' mt-4 md:mt-10 bg-gray-50 focus:outline-gray-200 text-xl font-bold  text-slate-400' placeholder='Write your blog here ...'
+                            className=' mt-4 md:mt-10 bg-gray-50 focus:outline-none text-xl font-bold  text-slate-400' placeholder='Write your blog here ...'
                             {...register('content')}
                         />
                         {errors.content && <p className='text-red-500'>{errors.content.message}</p>}
