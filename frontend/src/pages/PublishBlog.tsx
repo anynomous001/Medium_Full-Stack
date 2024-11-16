@@ -10,7 +10,8 @@ import { useForm } from 'react-hook-form'
 import { createBlogInput, createBlogType } from '@pritamchak/common-package'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-// import MDEditor from '@uiw/react-md-editor';
+import MDEditor from '@uiw/react-md-editor';
+import React from 'react'
 
 
 
@@ -19,14 +20,25 @@ const PublishBlog = () => {
     const navigate = useNavigate()
     const { date } = useDate()
 
-    const { register, setError, handleSubmit, formState: { errors, isSubmitting } } = useForm<createBlogType>({
+    const [content, setContent] = React.useState('')
+
+
+
+    const { register, setError, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<createBlogType>({
         resolver: zodResolver(createBlogInput)
     })
+
+    const handleContentChange = (value: string | undefined) => {
+        setContent(value || '');
+        setValue('content', value || '', { shouldValidate: true });
+    };
+
+
 
 
     const onSubmit = async (data: createBlogType) => {
 
-        const dataWithDate = { ...data, date }
+        const dataWithDate = { ...data, date, content }
         try {
 
             const response = await axios.post(`${BACKEND_URL}/api/h1/blog`, dataWithDate, {
@@ -81,25 +93,28 @@ const PublishBlog = () => {
                         {errors.title && <p className='text-red-500'>{errors.title.message}</p>}
 
                     </div>
-                    <div>
+                    {/* <div>
                         <Textarea
-                            className=' mt-4 md:mt-10 bg-gray-50 focus:outline-none text-xl font-bold  text-slate-400' placeholder='Write your blog here ...'
+                            className=' mt-4 md:mt-10 bg-gray-50 focus:outline-none text-xl font-bold  text-slate-400'
+                            placeholder='Write your blog here ...'
                             {...register('content')}
                         />
                         {errors.content && <p className='text-red-500'>{errors.content.message}</p>}
-                    </div>
+                    </div> */}
 
 
-                    {/*
-                         <TextArea onChange={(e) => setContent(e.target.value)} /> 
+                    <div>
+
+                        {/* <Textarea onChange={(e) => setContent(e.target.value)} /> */}
                         <MDEditor
-                        value={content}
-                        onChange={(value) => setContent(value as string)}
-                        height={300}
-                        preview='edit'
-                        /> 
-                         <MDEditor.Markdown source={content} style={{ whiteSpace: 'pre-wrap' }} />
-                          */}
+                            className=' mt-4 md:mt-10 bg-gray-50 focus:outline-none text-2xl font-normal  text-black'
+                            onChange={handleContentChange}
+                            value={content}
+                            height={300}
+                            preview='edit'
+                        />
+                        <MDEditor.Markdown source={content} style={{ whiteSpace: 'pre-wrap' }} />
+                    </div>
                     <div className='flex justify-end mt-0'>
 
                         <Button

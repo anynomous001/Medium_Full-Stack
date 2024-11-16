@@ -3,12 +3,19 @@ import { Blog } from '../hooks'
 import Appbar from './Appbar'
 import ShareComponent from './shareComponent'
 import { commentState } from '@/recoil/atom'
+import markdownit from 'markdown-it'
+import DOMPurify from 'dompurify';
 
+
+const md = markdownit()
 
 
 const Fullblog = ({ blog }: { blog: Blog }) => {
 
     const comment = useRecoilValue(commentState)
+
+
+    const parsedContent = DOMPurify.sanitize(md.render(blog.content || ''));
 
     console.log(blog)
 
@@ -21,7 +28,8 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
                     <div className='text-2xl md:text-7xl  font-extrabold '>{blog.title}</div>
                     <div className='text-slate-500 text-sm md:text-lg mt-5 font-bold mb-8'>{`Posted on ${blog.date === null ? 'No Date' : blog.date}`}</div>
                     <ShareComponent />
-                    <div className='text-base md:text-2xl text-gray-500  mt-10 leading-snug font-medium break-words'>{blog.content}</div>
+                    <div className='text-base md:text-2xl text-gray-500 mt-10 leading-snug font-medium break-words'
+                        dangerouslySetInnerHTML={{ __html: parsedContent }} />
                 </div>
 
                 <div className='col-span-4 pr-4 md:mt-0 mt-10 '>
@@ -43,22 +51,30 @@ const Fullblog = ({ blog }: { blog: Blog }) => {
 
 
                     <div className=' mt-12  border-2 border-blue-600 border-solid space-x-3'>
-                        <p>Comments</p>
-                        <div className='my-3'>
+                        <p className='md:text-2xl text:xl font-semibold text-slate-700'>Comments</p>
+                        <div className='my-3 '>
 
                             {
-                                comment?.map((comments) => (<div key={Math.random()} className='flex gap-3 mt-3' >
-
-                                    <div className='relative  items-center justify-center flex-shrink-0 inline-flex w-8 h-8
-     overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600'>
-                                        <span className='text-gray-500    font-bold '>{comments.commenter[0]?.toUpperCase() || 'A'}</span>
+                                comment.length === 0 ?
+                                    <div>
+                                        No comments.
                                     </div>
+                                    :
+                                    comment?.map((comments) => (<div key={Math.random()} className='' >
+                                        <div className='flex gap-6 mt-3 mb-4'>
 
-                                    <p>
-                                        {comments.content}
-                                    </p>
-                                </div>
-                                ))
+                                            <div className='relative  items-center justify-center flex-shrink-0 inline-flex w-8 h-8
+     overflow-hidden bg-slate-700 rounded-full dark:bg-gray-600'>
+                                                <span className='text-white    font-bold '>{comments.commenter[0]?.toUpperCase() || 'A'}</span>
+                                            </div>
+
+                                            <p className='p-2 border-2 border-slate-300/80 w-full rounded-xl'>
+                                                {comments.content}
+                                            </p>
+                                        </div>
+                                        <hr />
+                                    </div>
+                                    ))
                             }
                         </div>
 
