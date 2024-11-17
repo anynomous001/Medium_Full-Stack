@@ -12,6 +12,11 @@ import axios from 'axios';
 import { BACKEND_URL } from '@/config';
 import { useSetRecoilState } from 'recoil';
 import { userOwnPostInfo } from '@/recoil/atom';
+import markdownit from 'markdown-it'
+import DOMPurify from 'dompurify';
+
+
+const md = markdownit()
 
 
 export interface BlogcardProps {
@@ -44,6 +49,7 @@ const Blogcards = ({ authorName, title, content, publishedDate, id, isAuthor }: 
         }
     }
 
+    const parsedContent = DOMPurify.sanitize(md.render(content || ''));
 
 
     return (
@@ -83,8 +89,9 @@ const Blogcards = ({ authorName, title, content, publishedDate, id, isAuthor }: 
                 </div>
                 <Link to={`/blog/${id}`}>
                     <div className='font-bold text-lg md:text-3xl'>{title}</div>
-                    <div className='font-medium mt-1 md:mt-3 text-sm md:text-xl text-wrap max-w-[90%] text-slate-500 break-words'>{`${content.slice(0, 100)} ...`}</div>
-                    <div className=' my-2 md:my-4 text-xs'>{`Reading ${Math.ceil(content.length / 1000)} minutes`}</div>
+                    <div className=' mt-1 md:mt-3 text-sm md:text-xl text-wrap max-w-[90%] text-slate-500 break-words leading-loose line-clamp-3' dangerouslySetInnerHTML={{ __html: parsedContent }}
+                    />
+                    <div className=' my-2 md:my-4 text-xs'>{`Reading ${Math.ceil(parsedContent.length / 1000)} minutes`}</div>
                 </Link>
                 <hr />
 

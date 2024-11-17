@@ -64,7 +64,7 @@ const UserDetails = () => {
                         <div>
                             <p className="text-2xl md:text-4xl mt-4 text-slate-500 font-bold">Your Posts</p>
                         </div>
-                        <div className='flex  flex-col w-[90%] md:w-3/4 items-center gap-1  md:gap-6'>
+                        <div className='flex min-w-full flex-col md:w-3/4 items-center gap-1  md:gap-6'>
                             {loading2 ?
                                 <div className="md:w-full w-full md:ml-40">
                                     <BlogSkeleton />
@@ -73,7 +73,7 @@ const UserDetails = () => {
                                     <BlogSkeleton />
                                 </div>
                                 : userOwnPosts?.posts.length === 0 ?
-                                    <div className="flex min-w-full items-center pt-32">
+                                    <div className="flex md:w-3/4 items-center pt-32">
                                         <p className="text-2xl text-slate-500/40 block font-bold mr-4">
                                             No Posts to Show !!
                                         </p>
