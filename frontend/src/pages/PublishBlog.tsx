@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import { useDate } from '../hooks'
 
 import { Button } from "@/components/ui/button"
-import { Textarea } from '@/components/ui/textarea'
 import { useForm } from 'react-hook-form'
 import { createBlogInput, createBlogType } from '@pritamchak/common-package'
 import { zodResolver } from '@hookform/resolvers/zod'
