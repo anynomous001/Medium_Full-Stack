@@ -1,9 +1,6 @@
-name: Building and linting on push and pull request
+name: Building and linting on pull request
 
 on:
-    push:
-        branches:
-            - '**'
     pull_request:
         branches:
             - '**'
@@ -11,7 +8,7 @@ on:
 jobs:
     Continuous-Integration:
 
-        name: Performing linting and building checks on push and pull request
+        name: Performing linting and building checks on pull request
         runs-on: ubuntu-latest
 
         steps:
